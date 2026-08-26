@@ -1,0 +1,17 @@
+vendor/
+node_modules/
+
+*.log
+.DS_Store
+
+.vscode/
+.idea/
+
+docker-data/
+data/
+
+.phpunit.result.cache
+
+.env
+.env.*
+!.env.example
