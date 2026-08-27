@@ -1,0 +1,24 @@
+:root {
+  --page-background-color: #f0f0f0;
+  --page-text-color: #333;
+
+  --font-family: 'Helvetica Neue', Arial, verdana, sans-serif;
+  --font-size: 18px;
+
+  @media screen and (max-width: 768px) {
+    --font-size: 16px;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--page-background-color);
+  color: var(--page-text-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  margin: 0;
+  padding: 0;
+}
