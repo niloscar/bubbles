@@ -11,4 +11,4 @@
     <header>
       <h1><?= SITE_NAME ?></h1>
     </header>
-    <? navMain(); ?>
+    <? part('nav_main') ?>

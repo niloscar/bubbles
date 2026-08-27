@@ -1,5 +1,7 @@
 <?php
 
+require_once BASE_PATH . '/app/data/mock_data.php';
+
 function pageTitle(): string
 {
   $pageSlug = $_GET['p'] ?? 'start';
@@ -13,23 +15,20 @@ function pageTitle(): string
   return SITE_NAME;
 }
 
-function pageOutput()
+function output(): void
 {
-  $startPageSlug = PAGES[0]['slug'];  
-  $currentPageSlug  = $_GET['p'] ?? $startPageSlug;  
-  
-  $currentPageView = null;
+    $startPageSlug = PAGES[0]['slug'];
+    $currentPageSlug = $_GET['p'] ?? $startPageSlug;
 
-  foreach (PAGES as $page) {
-    if ($page['slug'] === $startPageSlug) {
-      $startPageView = $page['view'];
+    $currentPageView = null;
+    $startPageView = PAGES[0]['view'];
+
+    foreach (PAGES as $page) {
+        if ($page['slug'] === $currentPageSlug) {
+            $currentPageView = $page['view'];
+            break;
+        }
     }
 
-    if ($page['slug'] === $currentPageSlug) {
-      $currentPageView = $page['view'];
-      return;
-    }
-  }
-  
-  include BASE_PATH . '/app/views/pages/' . ($currentPageView ?? $startPageView);
+    page($currentPageView ?? $startPageView);
 }

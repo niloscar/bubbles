@@ -3,11 +3,19 @@
   const SITE_NAME = 'Bubbles';
 
   const PAGES = [
-    ['title' => 'Start', 'slug' => 'start', 'view' => 'page_start.php'],
-    ['title' => 'Tråd', 'slug' => 'thread', 'view' => 'page_thread.php'],
-    ['title' => 'Bubbla', 'slug' => 'bubble', 'view' => 'page_bubble.php'],
-    ['title' => 'Logga in', 'slug' => 'login', 'view' => 'page_login.php'],
-    ['title' => 'Registrera', 'slug' => 'register', 'view' => 'page_register.php']
+    ['title' => 'Start', 'slug' => 'start', 'view' => 'page_start'],
+    ['title' => 'Tråd', 'slug' => 'thread', 'view' => 'page_thread'],
+    ['title' => 'Bubbla', 'slug' => 'bubble', 'view' => 'page_bubble'],
+    ['title' => 'Logga in', 'slug' => 'login', 'view' => 'page_login'],
+    ['title' => 'Registrera', 'slug' => 'register', 'view' => 'page_register']
+  ];
+
+  const NAV_MAIN = [
+    ['title' => 'Start', 'slug' => 'start'],
+    ['title' => 'Bubbla', 'slug' => 'bubble'],
+    ['title' => 'Tråd', 'slug' => 'thread'],
+    ['title' => 'Logga in', 'slug' => 'login'],
+    ['title' => 'Registrera', 'slug' => 'register']
   ];
 
   ?>

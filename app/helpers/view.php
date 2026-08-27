@@ -1,16 +1,16 @@
 <?php
 
-function pageHeader()
+function part(string $name): void
 {
-  include_once BASE_PATH . '/app/views/parts/header.php';
+    include BASE_PATH . "/app/views/parts/{$name}.php";
 }
 
-function pageFooter()
+function page(string $name): void
 {
-  include_once BASE_PATH . '/app/views/parts/footer.php';
+    include BASE_PATH . "/app/views/pages/{$name}.php";
 }
 
-function navMain()
+function component(string $name): void
 {
-  include BASE_PATH . '/app/views/parts/nav_main.php';
+    include BASE_PATH . "/app/views/components/{$name}.php";
 }
