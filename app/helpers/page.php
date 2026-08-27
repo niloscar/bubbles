@@ -3,8 +3,6 @@
  * Page helper
  */
 
-require_once BASE_PATH . '/app/data/mock_data.php';
-
 function pageTitle(): string
 {
   $pageSlug = $_GET['p'] ?? 'start';

@@ -8,6 +8,4 @@ part('header');
 
 output();
 
-include BASE_PATH . '/config/database.php';
-
 part('footer');

@@ -3,7 +3,8 @@
  * Group list component
  */
 
-$groups = getGroups();
+$pdo = db();
+$groups = getGroups($pdo);
 
 if (empty($groups)) {
     echo 'Kunde inte hämta grupper.';
@@ -21,7 +22,8 @@ if (empty($groups)) {
               </a>
             </h3>
             <p><?php echo htmlspecialchars($group['description']); ?></p>
-            <small>Skapad: <?php echo htmlspecialchars($group['created_at']); ?></small>
+            <small>Skapad: <?php echo htmlspecialchars($group['created_at']); ?></small><br>
+            <small>Medlemmar: <?php echo htmlspecialchars($group['user_count']); ?></small>
         </li>
     <?php } ?>
 </ul>
