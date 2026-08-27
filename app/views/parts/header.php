@@ -1,3 +1,10 @@
+<?php
+/**
+ * Header part
+ */
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

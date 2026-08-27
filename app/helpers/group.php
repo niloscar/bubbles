@@ -1,4 +1,7 @@
 <?php
+/**
+ * Group helper
+ */
 
 function getGroups()
 {

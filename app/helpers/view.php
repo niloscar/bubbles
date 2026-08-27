@@ -1,4 +1,7 @@
 <?php
+/**
+ * View helper
+ */
 
 function part(string $name): void
 {

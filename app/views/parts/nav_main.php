@@ -1,3 +1,10 @@
+<?php
+/**
+ * Navigation main part
+ */
+?>
+
+
 <nav>
   <ul>
     <? foreach (NAV_MAIN as $page) { ?>
