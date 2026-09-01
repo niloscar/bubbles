@@ -6,4 +6,4 @@
 
 <h1><?= pageTitle() ?></h1>
 
-<? component('registration_field') ?>
+<? component('registration_form') ?>

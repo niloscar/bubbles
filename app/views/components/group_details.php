@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Group details component
  */

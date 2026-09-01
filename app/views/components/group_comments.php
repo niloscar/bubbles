@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Group comments component view
  */
@@ -17,7 +18,7 @@ $comments = getCommentsByGroupId($pdo, $groupId);
     <li>
       <p>
         <a href="?p=user&amp;uid=<?= urlencode($comment['user_id']) ?>">
-          <?= htmlspecialchars($comment['alias']) ?>
+          <?= htmlspecialchars($comment['username']) ?>
         </a>:
         <?= htmlspecialchars($comment['text']) ?>
         <?= formatTimeAgo($comment['created_at']) ?>

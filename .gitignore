@@ -15,3 +15,5 @@ data/
 .env
 .env.*
 !.env.example
+
+pw/

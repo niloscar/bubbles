@@ -5,11 +5,11 @@
 
 function db(): PDO
 {
-  $host = getenv('DB_HOST');
-  $port = getenv('DB_PORT');
-  $dbname = getenv('DB_NAME');
-  $username = getenv('DB_USER');
-  $password = getenv('DB_PASSWORD');
+  $host = getenv('DB_HOST') ?: envError('DB_HOST');
+  $port = getenv('DB_PORT') ?: envError('DB_PORT');
+  $dbname = getenv('DB_NAME') ?: envError('DB_NAME');
+  $username = getenv('DB_USER') ?: envError('DB_USER');
+  $password = getenv('DB_PASSWORD') ?: envError('DB_PASSWORD');
 
 
   return new PDO(
@@ -21,4 +21,9 @@ function db(): PDO
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     ]
   );
+}
+
+function envError(string $varName): void
+{
+  throw new RuntimeException("$varName is not set");
 }
