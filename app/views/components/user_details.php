@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User details component
  */

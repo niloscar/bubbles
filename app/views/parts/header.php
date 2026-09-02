@@ -1,21 +1,26 @@
 <?php
+
 /**
  * Header part
  */
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/index.css?v=<?=date("ymd") ?>" />
+  <link rel="stylesheet" href="./css/index.css?v=<?= date("ymd") ?>" />
   <title><?= SITE_NAME ?></title>
 </head>
+
 <body>
-  <div id="page">
-    <header>
+  <header class="page-header">
+    <div class="container">
       <h1><?= SITE_NAME ?></h1>
-    </header>
-    <? part('nav_main') ?>
+    </div>
+  </header>
+  <? part('nav_main') ?>
+
+  <main class="page-main">
+    <div class="container">
