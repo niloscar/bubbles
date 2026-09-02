@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($value === '') {
       $errorMessages[] = [
-        "name" => $field,
-        "text" => "Fältet \"$swedishFields[$field]\" är obligatoriskt."
+        "field" => $field,
+        "message" => "Fältet \"$swedishFields[$field]\" är obligatoriskt."
       ];
     }
   }
@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if (!$usernameIsValid) {
     $errorMessages[] = [
-      'name' => 'username',
-      'text' => 'Användarnamnet får endast innehålla bokstäver, siffror, bindestreck och understreck.'
+      'field' => 'username',
+      'message' => 'Användarnamnet får endast innehålla bokstäver, siffror, bindestreck och understreck.'
     ];
   }
 
@@ -51,22 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if (!$emailIsValid) {
     $errorMessages[] = [
-      'name' => 'email',
-      'text' => 'Mailadressen är inte giltig.'
+      'field' => 'email',
+      'message' => 'Mailadressen är inte giltig.'
     ];
   }
 
   if (strlen($formData['password'] ?? '') < 8) {
     $errorMessages[] = [
-      'name' => 'password',
-      'text' => 'Lösenordet måste innehålla minst 8 tecken.'
+      'field' => 'password',
+      'message' => 'Lösenordet måste innehålla minst 8 tecken.'
     ];
   }
 
   if ($formData['password'] !== $formData['confirm_password']) {
     $errorMessages[] = [
-      'name' => 'confirm_password',
-      'text' => 'Lösenorden matchar inte.'
+      'field' => 'confirm_password',
+      'message' => 'Lösenorden matchar inte.'
     ];
   }
 
@@ -74,15 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($usernameIsValid && usernameExists($pdo, $formData['username'])) {
     $errorMessages[] = [
-      'name' => 'username',
-      'text' => 'Användarnamnet är upptaget.'
+      'field' => 'username',
+      'message' => 'Användarnamnet är upptaget.'
     ];
   }
 
   if ($emailIsValid && emailExists($pdo, $formData['email'])) {
     $errorMessages[] = [
-      'name' => 'email',
-      'text' => 'Mailadressen är upptagen.'
+      'field' => 'email',
+      'message' => 'Mailadressen är upptagen.'
     ];
   }
 
@@ -101,29 +101,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       exit;
     } catch (PDOException $e) {
       $errorMessages[] = [
-        'name' => 'database',
-        'text' => 'Ett fel uppstod vid registrering. Vänligen försök igen senare.'
+        'field' => 'database',
+        'message' => 'Ett fel uppstod vid registrering. Vänligen försök igen senare.'
       ];
     }
   }
-}
-
-function displayErrorMessage(array $errorMessages, $field = null)
-{
-  foreach ($errorMessages as $error) {
-    if (($error['name'] ?? null) === $field) {
-      return "<span class='error-message'>{$error['text']}</span>";
-    }
-  }
-
-  return '';
 }
 
 function formField(array $field, array $errorMessages): void
 {
   $value = htmlspecialchars($_POST[$field['name']] ?? '');
   $requiredAttr = $field['required'] ? 'required' : '';
-  $errorMessage = displayErrorMessage($errorMessages, $field['name']);
+  $errorMessage = displayFormErrorMessage($errorMessages, $field['name']);
   $errorClass = empty($errorMessage) ? '' : ' error';
 
   echo <<<HTML
