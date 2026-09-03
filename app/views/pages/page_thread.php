@@ -2,7 +2,26 @@
 /**
  * Page thread view
  */
+
+$threadId = isset($_GET['tid']) 
+  ? (int) $_GET['tid'] 
+  : null;
+
+if (!$threadId) {
+  echo "<p>Ingen tråd vald.</p>";
+  return;
+}
+
+$pdo = db();
+$thread = getThreadById($pdo, $threadId);
+
+if ($thread === false) {
+  echo "<p>Kunde inte hitta tråden.</p>";
+  return;
+}
 ?>
 
-<h1><?= pageTitle() ?></h1>
-<h2>Det här är en tråd</h2>
+<? component('thread_breadcrumbs') ?>
+
+<h1><?= $thread['subject'] ?></h1>
+<p><?= $thread['text'] ?></p>

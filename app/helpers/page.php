@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Page helper
  */
@@ -16,7 +17,7 @@ function pageTitle(): string
   return SITE_NAME;
 }
 
-function output(): void
+function output(array $data = []): void
 {
     $startPageSlug = PAGES[0]['slug'];
     $currentPageSlug = $_GET['p'] ?? $startPageSlug;
@@ -31,5 +32,5 @@ function output(): void
         }
     }
 
-    page($currentPageView ?? $startPageView);
+    page($currentPageView ?? $startPageView, $data);
 }

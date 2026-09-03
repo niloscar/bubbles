@@ -13,7 +13,7 @@ if (empty($groups)) {
 
 ?>
 
-<ul>
+<ul class="no-list-style group-list">
     <?php foreach ($groups as $group) { ?>
         <li>
             <h3>
@@ -22,8 +22,21 @@ if (empty($groups)) {
               </a>
             </h3>
             <p><?php echo htmlspecialchars($group['description']); ?></p>
-            <small>Skapad: <?php echo htmlspecialchars($group['created_at']); ?></small><br>
-            <small>Medlemmar: <?php echo htmlspecialchars($group['user_count']); ?></small>
+            <ul class="no-list-style group-meta">
+                <li>
+                    <label>Senaste aktivitet:</label>
+                    <span><?php echo formatTimeAgo(htmlspecialchars($group['last_activity'])); ?></span>
+                </li>
+                <li>
+                    <label>Medlemmar:</label>
+                    <span><?php echo htmlspecialchars($group['user_count']); ?></span>
+                </li>
+            </ul>
+            <?php if (getGroupRole($pdo, $group['id'])) { ?>
+                <br><small>Din roll: <?php echo htmlspecialchars(getGroupRole($pdo, $group['id'])); ?></small>
+            <?php } else { ?>
+                <button>Ansök om medlemskap</button>
+            <?php } ?>
         </li>
     <?php } ?>
 </ul>

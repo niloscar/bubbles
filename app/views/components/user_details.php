@@ -22,19 +22,28 @@
   }
 
   $groups = getGroupsByUserId($pdo, $userId);
-  if (!empty($groups)) {
-    $a = [];
+  // if (!empty($groups)) {
+  //   $a = [];
 
-    foreach ($groups as $group) {
-      $a[] = '<a href="?p=group&amp;gid=' . urlencode($group['id']) . '">' . htmlspecialchars($group['name']) . '</a>';
-    }
-    $groups = (count($a)) ? implode(', ', $a) : "{$user['alias']} är inte medlem i några grupper.";
-  }
+  //   foreach ($groups as $group) {
+  //     $a[] = '<a href="?p=group&amp;gid=' . urlencode($group['id']) . '">' . htmlspecialchars($group['name']) . '</a>';
+  //   }
+  //   $groups = (count($a)) ? implode(', ', $a) : "{$user['alias']} är inte medlem i några grupper.";
+  // }
 
 ?>
 
-<h1><?= htmlspecialchars($user['alias']) ?></h1>
+<h1><?= htmlspecialchars($user['username']) ?></h1>
 <p><?= htmlspecialchars($user['fname'] . ' ' . $user['lname']) ?></p>
 <p><?= htmlspecialchars($user['email']) ?></p>
-<p>Medlem sedan: <?= htmlspecialchars($user['registered_at']) ?></p>
-<p>Grupper: <?= $groups ?></p>
+<p>Skapad för <?= formatTimeAgo(htmlspecialchars($user['registered_at'])) ?></p>
+<p>Medlem i:</p>
+<? if (empty($groups)) { ?>
+  <p><?= htmlspecialchars($user['username']) ?> är inte medlem i några grupper.</p>
+<? } else { ?>
+<ul>
+  <? foreach ($groups as $group) { ?>
+    <li><a href="?p=group&gid=<?= urlencode($group['id']) ?>"><?= htmlspecialchars($group['name']) ?></a></li>
+  <? } ?>
+</ul>
+<? } ?>
