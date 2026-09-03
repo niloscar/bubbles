@@ -13,18 +13,17 @@ if (!$groupId) {
 }
 
 $pdo = db();
+$group = getGroupById($pdo, $groupId);
 $role = getGroupRole($pdo, $groupId);
-?>
 
-<? component('group_details') ?>
+component('group_details', ['group' => $group]) ?>
 
 <?
 
 if ($role === false) {
-  echo "<p>Eftersom du inte är medlem i gruppen, är du inte behörig att ta del av eller delta i gruppens diskussioner. Ansök om att gå med i gruppen <a href='?p=join_group&gid=" . $groupId . "'>här</a>.</p>";
-  return;
+  echo "<p>Eftersom du inte är medlem i gruppen, är du inte behörig att ta del av eller delta i gruppens diskussioner.</p>";
 }
 
-?>
+component('request_membership', ['group' => $group]) ?>
 
 <? component('group_threads') ?>

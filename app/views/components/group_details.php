@@ -4,22 +4,17 @@
  * Group details component
  */
 
-$groupId = isset($_GET['gid'])
-  ? (int) $_GET['gid']
-  : null;
 
-$pdo = db();
-$group = getGroupById($pdo, $groupId);
-
-if (!$groupId) {
-  echo "<p>Ingen grupp vald.</p>";
-  return;
-}
+$data ??= [];
+$group = $data['group'];
 
 if ($group === false) {
   echo "<p>Kunde inte hitta gruppen.</p>";
   return;
 }
+
+$groupId = $group['id'];
+$pdo = db();
 
 $group['users'] = getUsersByGroupId($pdo, $groupId);
 
