@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Format helper
  */
@@ -26,12 +27,12 @@ function formatDateToText(string $dateString): string
   $date = new DateTime('2026-01-01');
 
   $formatted = new IntlDateFormatter(
-      'sv_SE',
-      IntlDateFormatter::FULL,
-      IntlDateFormatter::NONE,
-      null,
-      null,
-      'EEEE, d MMMM y'
+    'sv_SE',
+    IntlDateFormatter::FULL,
+    IntlDateFormatter::NONE,
+    null,
+    null,
+    'd MMMM y'
   );
 
   return $formatted->format($date);
@@ -41,19 +42,21 @@ function formatTimeAgo(string $dateString): string
 {
   $date = new DateTime($dateString);
   $now = new DateTime();
+
   $interval = $now->diff($date);
 
-  if ($interval->y > 0) {
-    return $interval->y . ' år sedan';
-  } elseif ($interval->m > 0) {
-    return $interval->m . ' månader sedan';
-  } elseif ($interval->d > 0) {
-    return $interval->d . ' dagar sedan';
-  } elseif ($interval->h > 0) {
-    return $interval->h . ' timmar sedan';
-  } elseif ($interval->i > 0) {
-    return $interval->i . ' minuter sedan';
-  } else {
-    return 'just nu';
-  }
+  $plural = function (int $value, string $singular, string $plural): string {
+    return $value . ' ' . ($value === 1 ? $singular : $plural);
+  };
+
+  $return = match (true) {
+    $interval->y > 0 => $plural($interval->y, 'år', 'år'),
+    $interval->m > 0 => $plural($interval->m, 'månad', 'månader'),
+    $interval->d > 0 => $plural($interval->d, 'dag', 'dagar'),
+    $interval->h > 0 => $plural($interval->h, 'timme', 'timmar'),
+    $interval->i > 0 => $plural($interval->i, 'minut', 'minuter'),
+    default => null
+  };
+
+  return $return ? $return . ' sedan' : 'just nu';
 }
