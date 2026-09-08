@@ -18,6 +18,8 @@ $role = getGroupRole($pdo, $groupId);
 $isMember = $role !== false;
 $isAdmin = strtolower($role) === 'admin';
 
+component('breadcrumbs', ['group' => $group]);
+
 component('group_details', ['group' => $group]);
 
 if (!$isMember) {
@@ -32,9 +34,9 @@ if (!$isMember) {
 if ($isAdmin) {
 ?>
 
-<h2>Administrera gruppen</h2>
+<h2 class="h-size-3">Administrera gruppen</h2>
 
-<h3>Medlemsförfrågningar</h3>
+<h3 class="h-size-4">Medlemsförfrågningar</h3>
 <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
 
 <?

@@ -11,7 +11,7 @@ $user = isset($_SESSION['user_id'])
 
 ?>
 
-<h1><?= pageTitle() ?> för <?= $user['username'] ?></h1>
+<h1 class="h-size-1"><?= pageTitle() ?> för <?= $user['username'] ?></h1>
 
 <?php
 
@@ -78,7 +78,7 @@ $user = isset($_SESSION['user_id'])
   <li><label>Antal kommentarer</label> <span><?= $user['comment_count'] ?> st</span></li>
 </ul>
 
-<h2>Uppdatera profil</h2>
+<h2 class="h-size-3">Uppdatera profil</h2>
 <form method="post" class="form profile-form">
   <? foreach ($profileFormFields as $fieldName => $field) { ?>
     <div class="form-field">
@@ -92,7 +92,7 @@ $user = isset($_SESSION['user_id'])
   </div>
 </form>
 
-<h2>Ändra lösenord</h2>
+<h2 class="h-size-3">Ändra lösenord</h2>
 <form method="post" class="form password-form">
   <? foreach ($passwordFormFields as $fieldName => $field) { ?>
     <div class="form-field">

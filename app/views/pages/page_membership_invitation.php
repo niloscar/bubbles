@@ -23,7 +23,7 @@ if ($timeDiff <= 0) {
 }
 
 ?>
-<h1>Inbjudan till grupp</h1>
+<h1 class="h-size-1">Inbjudan till grupp</h1>
 <p>
   Du har blivit inbjuden till gruppen 
   <strong><a href="?p=group&gid=<?= urlencode($invite['group_id']) ?>"><?= htmlspecialchars($invite['group_name']) ?></a></strong> 
