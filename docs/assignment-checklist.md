@@ -15,8 +15,8 @@
 
 **Betyg VG:**
 
-- [ ] Det ska finns 2 roller som en användare kan ha för en grupp, medlem eller adminstratör.​​​​​​​
-- [ ] Det är endast administratörer som ska kunna godkänna ansökningar om att gå med i gruppen
+- [x] Det ska finns 2 roller som en användare kan ha för en grupp, medlem eller adminstratör.​​​​​​​
+- [x] Det är endast administratörer som ska kunna godkänna ansökningar om att gå med i gruppen
 - [ ] En administraör ska kunna välja roll på de andra som är med i gruppen
 - [ ] En administratör ska kunna skapa en inbjudanlänk, som en annan person kan använda för att gå med i gruppen utan att behöva vänta på att bli godkänd. Detta ska vara en “hot link” där man bara kan registrera sig 1 gång, och den ska bara vara giltig i 24 timmar.
 

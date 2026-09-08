@@ -22,7 +22,11 @@ component('group_details', ['group' => $group]);
 
 if (!$isMember) {
   echo "<p>Endast medlemmar kan ta del av eller delta i gruppens diskussioner.</p>";
-  component('membership_status', ['group' => $group]);
+  if (isLoggedIn()) {
+    component('membership_status', ['group' => $group]);
+  } else {
+    echo "<a href='?p=login'>Logga in</a>";
+  }
 }
 
 if ($isAdmin) {
