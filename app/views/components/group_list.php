@@ -14,29 +14,31 @@ if (empty($groups)) {
 ?>
 
 <ul class="no-list-style group-list">
-    <?php foreach ($groups as $group) { ?>
+    <?php foreach ($groups as $group) { 
+        $isMember = $group['role'] !== null;
+        $requestPending = $group['membership_request_status'] ?? false;
+        ?>
         <li>
             <h3>
-              <a href="?p=group&amp;gid=<?php echo urlencode($group['id']); ?>">
-                <?php echo htmlspecialchars($group['name']); ?>
+              <a href="?p=group&gid=<?= urlencode($group['id']) ?>">
+                <?= htmlspecialchars($group['name']) ?>
               </a>
             </h3>
-            <p><?php echo htmlspecialchars($group['description']); ?></p>
+            <p><?= htmlspecialchars($group['description']) ?></p>
             <ul class="no-list-style group-meta">
                 <li>
                     <label>Senaste aktivitet:</label>
-                    <span><?php echo formatTimeAgo(htmlspecialchars($group['last_activity'])); ?></span>
+                    <span><?= formatTimeAgo(htmlspecialchars($group['last_activity'])) ?></span>
                 </li>
                 <li>
                     <label>Medlemmar:</label>
-                    <span><?php echo htmlspecialchars($group['user_count']); ?></span>
+                    <span><?= htmlspecialchars($group['user_count']) ?></span>
+                </li>
+                <li>
+                    <label>Din roll:</label>
+                    <? component('membership_status', ['group' => $group]) ?>
                 </li>
             </ul>
-            <?php if (getGroupRole($pdo, $group['id'])) { ?>
-                <br><small>Din roll: <?php echo htmlspecialchars(getGroupRole($pdo, $group['id'])); ?></small>
-            <?php } else { ?>
-                <button>Ansök om medlemskap</button>
-            <?php } ?>
         </li>
-    <?php } ?>
+    <? } ?>
 </ul>

@@ -13,18 +13,29 @@ if (!$groupId) {
 }
 
 $pdo = db();
+$group = getGroupById($pdo, $groupId);
 $role = getGroupRole($pdo, $groupId);
-?>
+$isMember = $role !== false;
+$isAdmin = strtolower($role) === 'admin';
 
-<? component('group_details') ?>
+component('group_details', ['group' => $group]);
 
-<?
-
-if ($role === false) {
-  echo "<p>Eftersom du inte är medlem i gruppen, är du inte behörig att ta del av eller delta i gruppens diskussioner. Ansök om att gå med i gruppen <a href='?p=join_group&gid=" . $groupId . "'>här</a>.</p>";
-  return;
+if (!$isMember) {
+  echo "<p>Endast medlemmar kan ta del av eller delta i gruppens diskussioner.</p>";
+  component('membership_status', ['group' => $group]);
 }
 
+if ($isAdmin) {
 ?>
 
-<? component('group_threads') ?>
+<h2>Administrera gruppen</h2>
+
+<h3>Medlemsförfrågningar</h3>
+<? component('pending_requests_list', ['group_id' => $group['id']]); ?>
+
+<?
+}
+
+if ($isMember) {
+  component('group_threads');
+}

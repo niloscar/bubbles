@@ -2,12 +2,11 @@
 
 /**
  * Page register view
+ * 
+ * @var array{error?: string} $data
  */
 
-$data ??= [];
-
 ?>
-
 <h1><?= pageTitle() ?></h1>
 
-<? component('registration_form', $data); ?>
+<? component('registration_form', $data);

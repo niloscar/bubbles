@@ -14,3 +14,11 @@ function displayFormErrorMessage(array $errorMessages, $field = null)
 
   return '';
 }
+
+function pageNotFound(): void
+{
+    http_response_code(404);
+    echo "<h1>404 Not Found</h1>";
+    echo "<p>Sidan du försöker nå finns inte.</p>";
+    exit;
+}

@@ -20,17 +20,10 @@ function handleLoginRequest(): array
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    if (!is_string($email)) {
-        $email = '';
-    }
+    if (!is_string($email)) $email = '';
+    if (!is_string($password)) $password = '';
 
-    if (!is_string($password)) {
-        $password = '';
-    }
-
-    $email = trim($email);
-
-    $formData['email'] = $email; // Store in formData for prefilling the form in case of errors.
+    $email = $formData['email'] = trim($email); // Store in formData for prefilling the form in case of errors.
 
     $requiredFields = [
         'email' => $email,

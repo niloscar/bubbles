@@ -2,9 +2,9 @@
 
 /**
  * Registration form component
+ * 
+ * @var array{errorMessages?: array<string>, formData?: array<string, string>} $data
  */
-
-$data ??= [];
 
 $errorMessages = $data['errorMessages'] ?? [];
 $formData = $data['formData'] ?? [];

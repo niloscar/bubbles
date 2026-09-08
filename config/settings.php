@@ -15,7 +15,8 @@ const PAGES = [
   ['title' => 'Logga in', 'slug' => 'login', 'view' => 'page_login'],
   ['title' => 'Registrera', 'slug' => 'register', 'view' => 'page_register'],
   ['title' => 'Användare', 'slug' => 'user', 'view' => 'page_user'],
-  ['title' => 'Profil', 'slug' => 'profile', 'view' => 'page_profile']
+  ['title' => 'Profil', 'slug' => 'profile', 'view' => 'page_profile'],
+  ['title' => 'Inbjudan', 'slug' => 'invitation', 'view' => 'page_membership_invitation'],
 ];
 
 const NAV_MAIN = [

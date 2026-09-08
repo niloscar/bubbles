@@ -1,9 +1,7 @@
 <?php
+
 /**
  * Page user view
  */
 
-
-?>
-
-<? component('user_details') ?>
+component('user_details');

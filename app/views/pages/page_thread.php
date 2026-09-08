@@ -19,9 +19,10 @@ if ($thread === false) {
   echo "<p>Kunde inte hitta tråden.</p>";
   return;
 }
-?>
 
-<? component('thread_breadcrumbs') ?>
+component('thread_breadcrumbs'); 
+
+?>
 
 <h1><?= $thread['subject'] ?></h1>
 <p><?= $thread['text'] ?></p>
