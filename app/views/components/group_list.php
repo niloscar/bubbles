@@ -34,10 +34,12 @@ if (empty($groups)) {
                     <label>Medlemmar:</label>
                     <span><?= htmlspecialchars($group['user_count']) ?></span>
                 </li>
+                <? if (isLoggedIn()) { ?>
                 <li>
                     <label>Din roll:</label>
                     <? component('membership_status', ['group' => $group]) ?>
                 </li>
+                <? } ?>
             </ul>
         </li>
     <? } ?>
