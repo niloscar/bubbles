@@ -2,10 +2,10 @@
 
 /**
  * Group details component
+ * 
+ * @var array{group: array<string, mixed>|false} $data
  */
 
-
-$data ??= [];
 $group = $data['group'];
 
 if ($group === false) {

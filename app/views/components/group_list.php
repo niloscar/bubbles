@@ -14,7 +14,10 @@ if (empty($groups)) {
 ?>
 
 <ul class="no-list-style group-list">
-    <?php foreach ($groups as $group) { ?>
+    <?php foreach ($groups as $group) { 
+        $isMember = $group['role'] !== null;
+        $requestPending = $group['membership_request_status'] ?? false;
+        ?>
         <li>
             <h3>
               <a href="?p=group&gid=<?= urlencode($group['id']) ?>">
@@ -31,8 +34,11 @@ if (empty($groups)) {
                     <label>Medlemmar:</label>
                     <span><?= htmlspecialchars($group['user_count']) ?></span>
                 </li>
+                <li>
+                    <label>Din roll:</label>
+                    <? component('membership_status', ['group' => $group]) ?>
+                </li>
             </ul>
-            <? component('request_membership', ['group' => $group]) ?>
         </li>
     <? } ?>
 </ul>

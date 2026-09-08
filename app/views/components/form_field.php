@@ -2,9 +2,9 @@
 
 /**
  * Form field component, used for rendering form fields with error messages
+ * 
+ * @var array{field: array<string, mixed>, formData?: array<string, string>, errorMessages?: array<string>} $data
  */
-
-$data ??= [];
 
 $field = $data['field'];
 $formData = $data['formData'] ?? [];

@@ -3,6 +3,8 @@
  * Boostrap, initialize and load the application
  */
 
+define('BASE_PATH', dirname(__DIR__));
+
 session_set_cookie_params([
     'httponly' => true,
     'secure' => true,
@@ -19,7 +21,7 @@ require_once BASE_PATH . '/app/request.php';
 require_once BASE_PATH . '/app/actions/login.php';
 require_once BASE_PATH . '/app/actions/logout.php';
 require_once BASE_PATH . '/app/actions/register.php';
-require_once BASE_PATH . '/app/actions/request_membership.php';
+require_once BASE_PATH . '/app/actions/membership.php';
 
 require_once BASE_PATH . '/app/helpers/view.php';
 require_once BASE_PATH . '/app/helpers/page.php';
@@ -32,3 +34,4 @@ require_once BASE_PATH . '/app/data/users.php';
 require_once BASE_PATH . '/app/data/groups.php';
 require_once BASE_PATH . '/app/data/threads.php';
 require_once BASE_PATH . '/app/data/membership_requests.php';
+require_once BASE_PATH . '/app/data/membership_invitations.php';

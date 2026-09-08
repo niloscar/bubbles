@@ -20,7 +20,8 @@ function authenticateUser(PDO $pdo, string $email, string $password): array|null
 
     if (!$user) return null;
 
-    if (!password_verify($password, $user['password_hash'])) {
+    $salt = getenv('SALT');
+    if (!password_verify($password . $salt, $user['password_hash'])) {
         return null;
     }
 

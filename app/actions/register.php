@@ -90,11 +90,12 @@ function handleRegisterRequest(): array
     }
 
     if (empty($errorMessages)) {
+        $salt = getenv('SALT');
         $newUser = [
             'username' => $username,
             'email' => $email,
             'password_hash' => password_hash(
-                $password,
+                $password . $salt,
                 PASSWORD_DEFAULT
             )
         ];

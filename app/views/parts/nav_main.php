@@ -7,6 +7,7 @@
   $user = currentUser($pdo);
 
   $avatar = $user['avatar'] ?? './assets/icons/user.svg';
+  $currentPage = $_GET['p'] ?? 'start';
 
 ?>
 
@@ -14,7 +15,11 @@
     <div class="container">
       <ul>
 <? foreach (NAV_MAIN as $page) { ?>
-        <li><a href="?p=<?= $page['slug'] ?>"><?= $page['title'] ?></a></li>
+        <li>
+          <a 
+            href="?p=<?= $page['slug'] ?>"
+            class="<?= $page['slug'] === $currentPage ? 'active' : '' ?>"
+          ><?= $page['title'] ?></a></li>
 <? }
 
 if ($user) { ?>
@@ -28,8 +33,12 @@ if ($user) { ?>
           </a>
         </li>
 <? } else { ?>
-        <li><a href="?p=login">Logga in</a></li>
-        <li><a href="?p=register">Registrera</a></li>
+        <li>
+          <a 
+            href="?p=login"
+            class="<?= $currentPage === 'login' ? 'active' : '' ?>"
+          >Logga in</a>
+        </li>
 <? } ?>
 
       </ul>

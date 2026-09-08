@@ -10,6 +10,14 @@ function handleRequest(): array
         if ($postAction === 'request_membership') {
             handleMembershipRequest();
         }
+
+        if ($postAction === 'approve_membership') {
+            handleApproveMembershipRequest();
+        }
+
+        if ($postAction === 'reject_membership') {
+            handleRejectMembershipRequest();
+        }
     }
 
     $pageSlug = $_GET['p'] ?? 'start';
@@ -21,6 +29,18 @@ function handleRequest(): array
 
     if ($pageSlug === 'register') {
         $viewData = handleRegisterRequest();
+    }
+
+    if ($pageSlug === 'invitation') {
+        $token = $_GET['token'] ?? null;
+
+        if (!is_string($token) || $token === '') pageNotFound();
+
+        $pdo = db();
+        $invite = getMembershipInvitationByToken($pdo, $token);
+
+        if (!$invite) pageNotFound();
+        $viewData['invite'] = $invite;
     }
 
     if ($getAction === 'logout') {
