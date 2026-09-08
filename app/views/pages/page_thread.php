@@ -20,9 +20,7 @@ if ($thread === false) {
   return;
 }
 
-component('thread_breadcrumbs'); 
-
+component('breadcrumbs', ['thread' => $thread]); 
 ?>
-
-<h1><?= $thread['subject'] ?></h1>
+<h1 class="h-size-1"><?= $thread['subject'] ?></h1>
 <p><?= $thread['text'] ?></p>

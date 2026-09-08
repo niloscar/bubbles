@@ -7,6 +7,6 @@
  */
 
 ?>
-<h1><?= pageTitle() ?></h1>
+<h1 class="h-size-1"><?= pageTitle() ?></h1>
 
 <? component('registration_form', $data);

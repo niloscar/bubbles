@@ -33,15 +33,15 @@
 
 ?>
 
-<h1><?= htmlspecialchars($user['username']) ?></h1>
+<h1 class="h-size-1"><?= htmlspecialchars($user['username']) ?></h1>
 <p><?= htmlspecialchars($user['fname'] . ' ' . $user['lname']) ?></p>
 <p><?= htmlspecialchars($user['email']) ?></p>
 <p>Skapad för <?= formatTimeAgo(htmlspecialchars($user['registered_at'])) ?></p>
-<p>Medlem i:</p>
+<h2 class="h-size-3">Grupper</h2>
 <? if (empty($groups)) { ?>
   <p><?= htmlspecialchars($user['username']) ?> är inte medlem i några grupper.</p>
 <? } else { ?>
-<ul>
+<ul class="no-list-style">
   <? foreach ($groups as $group) { ?>
     <li><a href="?p=group&gid=<?= urlencode($group['id']) ?>"><?= htmlspecialchars($group['name']) ?></a></li>
   <? } ?>
