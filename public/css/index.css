@@ -1,6 +1,9 @@
 :root {
   --page-width: 960px;
-  --page-padding: 32px;
+
+  --page-padding-x: 32px;
+  --page-padding-y: 32px;
+  --page-padding: var(--page-padding-y) var(--page-padding-x);
 
   --page-background-color: #f0f0f0;
   --page-text-color: #333;
@@ -382,18 +385,49 @@ ul.n-cols-3 {
   }
 }
 
-ul.group-threads {
+ul.thread-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+
   li {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    gap: 16px;
     padding: 8px 0;
 
     &:not(:last-child) {
       border-bottom: 1px solid #ccc;
     }
 
-    p {
-      margin: 0;
+    a {
+      font-weight: bold;
+    }
+
+    > span {
+      white-space: nowrap;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+
+      > span {
+        white-space: normal;
+      }
+    }
+  }
+}
+
+div.group-content {
+  padding: var(--page-padding-y) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--row-gap);
 }
 
 ul.group-list {
@@ -578,6 +612,13 @@ label {
 
 .error {
   color: var(--error);
+}
+
+.alert {
+  background-color: red;
+  border-radius: var(--button-border-radius);
+  padding: var(--button-padding);
+  color: #fff;
 }
 
 a.avatar {

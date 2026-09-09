@@ -20,7 +20,7 @@ $formFields = [
     'placeholder' => 'Beskriv vad gruppen ska diskutera...',
   ]
 ];
-var_dump($data['errorMessages'] ?? []);
+
 ?>
 <form method="POST" class="form create-group-form no-labels" novalidate>
   <?php foreach ($formFields as $field) {
@@ -30,9 +30,8 @@ var_dump($data['errorMessages'] ?? []);
       'errorMessages' => $data['errorMessages'] ?? [],
     ]);
   } ?>
+  <?= displayFormErrorMessage($data['errorMessages'] ?? [], 'general') ?>
   <div class="form-actions">
     <button type="submit" name="action" value="create_group">Skapa grupp</button>
   </div>
-
-  <?= displayFormErrorMessage($data['errorMessages'] ?? [], 'general') ?>
 </form>

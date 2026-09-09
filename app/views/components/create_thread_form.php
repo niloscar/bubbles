@@ -16,7 +16,8 @@ $groupOptions = array_map(
 
 if (empty($groupOptions) && !isset($_GET['gid'])) return;
 
-$preselectedGroup = isset($_GET['gid']);
+$preselectedGroupId = isset($_GET['gid']) ? (int) $_GET['gid'] : null;
+$preselectedGroup = $preselectedGroupId !== null;
 
 $formFields = [
   [
@@ -44,16 +45,23 @@ $formFields = [
 ];
 
 ?>
-<form method="POST" class="form create-thread-form no-labels">
-  <?php foreach ($formFields as $field) {
+<form method="POST" class="form create-thread-form no-labels" novalidate>
+
+  <? if ($preselectedGroup) { ?>
+    <input type="hidden" name="group_id" value="<?= htmlspecialchars((string) $preselectedGroupId) ?>">
+  <? } ?>
+
+  <? foreach ($formFields as $field) {
     if ($field['name'] === 'group_id' && $preselectedGroup) continue;
 
     component('form_field', [
       'field' => $field,
-      'formData' => $_POST,
+      'formData' => $data['formData'] ?? [],
       'errorMessages' => $data['errorMessages'] ?? [],
     ]);
   } ?>
+
+  <?= displayFormErrorMessage($data['errorMessages'] ?? [], 'general') ?>
 
   <div class="form-actions">
     <button type="submit" name="action" value="create_thread">
