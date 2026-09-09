@@ -10,7 +10,6 @@
 
 <? if (!isLoggedIn()) { ?>
   <p>För att kunna delta i diskussioner och skapa grupper måste du vara inloggad. Om du inte har ett konto kan du registrera dig nedan.</p>
-  <h2 class="h-size-3">Registrera dig</h2>
   <? component('registration_form'); ?>
   <? } else {
   $pdo = db();

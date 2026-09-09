@@ -2,14 +2,12 @@
 
 /**
  * Membership invitation (hotlink) page view
- * 
- * @var array{invite: array} $data
  */
 
-$invite = $data['invite'];
+$invite = $data['invite'] ?? null;
 
 if ($invite['used']) {
-  echo "<p>Inbjudningslänken har redan använts.</p>";
+  displayAlert('Inbjudningslänken har redan använts.', 'warning');
   return;
 }
 
@@ -18,20 +16,25 @@ $now = new DateTime();
 $timeDiff = $expiresAt->getTimestamp() - $now->getTimestamp();
 
 if ($timeDiff <= 0) {
-  echo "<p>Tidsgränsen för inbjudningslänken har gått ut.</p>";
+  displayAlert('Tidsgränsen för inbjudningslänken har gått ut.', 'warning');
   return;
 }
 
 ?>
-<h1 class="h-size-1">Inbjudan till grupp</h1>
+<h1 class="h-size-1">Inbjudan</h1>
 <p>
   Du har blivit inbjuden till gruppen 
   <strong><a href="?p=group&gid=<?= urlencode($invite['group_id']) ?>"><?= htmlspecialchars($invite['group_name']) ?></a></strong> 
   av användaren 
-  <a href="?p=user&uid=<?= urlencode($invite['inviter_id']) ?>"><?= htmlspecialchars($invite['inviter_username']) ?></a>.
+  <strong><a href="?p=user&uid=<?= urlencode($invite['inviter_id']) ?>"><?= htmlspecialchars($invite['inviter_username']) ?></a></strong>.
 </p>
-<form>
-  <button class="btn btn-accept">Acceptera inbjudan</button>
+<p>För att kunna acceptera inbjudan måste du vara inloggad.</p>
+<form class="form form-invitation" method="POST">
+    <input type="hidden" name="action" value="accept_membership_invitation">
+    <input type="hidden" name="token" value="<?= htmlspecialchars($invite['token']) ?>">
+  <div class="form-actions">
+      <button class="btn btn-accept" <?= (!isLoggedIn()) ? 'disabled' : '' ?>>Acceptera inbjudan</button>
+  </div>
 </form>
 <p class="invitation-expiration">Länken är giltig i ytterligare <span id="countdown"><?= formatSecondsToText($timeDiff) ?></span>.</p>
 

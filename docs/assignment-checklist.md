@@ -7,11 +7,11 @@
 - [x] All data måste hanteras säkert så att en användare inte kommer åt data som den inte ska ha tillgång till. 
 - [x] En användare ska kunna skapa ett användarkonto för att gå med i grupper
 - [x] Ett användarkonto ska lagra namn (för- och efternamn), epostadress och hash för lösenord.
-- [ ] En inloggad användare ska kunna skapa en grupp med ett namn på vad som diskuteras i den gruppen
-- [ ] När man är medlem i en grupp ska man kunna starta en diskussion, man anger ett ämne och ett första inlägg
-- [ ] Alla som är medlemmar i gruppen ska kunna svara med ett inlägg under ett ämne
+- [x] En inloggad användare ska kunna skapa en grupp med ett namn på vad som diskuteras i den gruppen
+- [x] När man är medlem i en grupp ska man kunna starta en diskussion, man anger ett ämne och ett första inlägg
+- [x] Alla som är medlemmar i gruppen ska kunna svara med ett inlägg under ett ämne
 - [x] Man ska kunna se alla grupper som man inte är medlem i, och man ska kunna ansöka om att gå med i gruppen
-- [ ] Om man är medlem i en grupp där det finns ansäkningar, ska man kunna godkänna dessa ansäkningar så att användaren blir medlem av gruppen
+- [x] Om man är medlem i en grupp där det finns ansökningar, ska man kunna godkänna dessa ansökningar så att användaren blir medlem av gruppen
 
 **Betyg VG:**
 

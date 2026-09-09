@@ -22,6 +22,7 @@ require_once BASE_PATH . '/app/actions/login.php';
 require_once BASE_PATH . '/app/actions/logout.php';
 require_once BASE_PATH . '/app/actions/register.php';
 require_once BASE_PATH . '/app/actions/membership.php';
+require_once BASE_PATH . '/app/actions/invitation.php';
 require_once BASE_PATH . '/app/actions/group.php';
 require_once BASE_PATH . '/app/actions/thread.php';
 require_once BASE_PATH . '/app/actions/comment.php';

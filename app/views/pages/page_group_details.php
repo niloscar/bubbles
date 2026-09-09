@@ -36,13 +36,41 @@ component('group_details', ['group' => $group]);
 
 } ?>
 
-<? if ($isAdmin) { ?>
+<? if ($isAdmin) { 
 
-<h2 class="h-size-3">Administrera gruppen</h2>
+$invitationLink = $_SESSION['generated_invitation_link'] ?? null;
+unset($_SESSION['generated_invitation_link']);
+  
+?>
+<section class="group-admin">
+  <h2 class="h-size-3">Administrera gruppen</h2>
 
-<h3 class="h-size-4">Medlemsförfrågningar</h3>
-<? component('pending_requests_list', ['group_id' => $group['id']]); ?>
+  <h3 class="h-size-4">Medlemsförfrågningar</h3>
+  <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
 
+  <h3 class="h-size-4">Hantera medlemmar</h3>
+  <ul>
+    <li>
+      Medlem 1
+      <span class="role pill">Admin</span>
+    </li>
+    <li>Medlem 2</li>
+  </ul>
+
+<h3 class="h-size-4">Inbjudningslänk</h3>
+
+  <? if (!$invitationLink) { ?>
+  <form method="POST">
+    <button type="submit">Generera länk</button>
+    <input type="hidden" name="action" value="create_membership_invitation">
+    <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
+  </form>
+  <? } else { ?>
+    <a href="<?= htmlspecialchars($invitationLink) ?>" class="invitation-input" readonly><?= htmlspecialchars($invitationLink) ?></a>
+    <p><i>Observera att vem som helst som har länken kan gå med i gruppen.</i></p>
+  <? } ?>
+
+</section>
 <? } ?>
 
 <? if ($isMember) { ?>

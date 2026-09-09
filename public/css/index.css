@@ -9,12 +9,16 @@
   --page-text-color: #333;
   --accent-color: #ffcc00;
   --success: #28a745;
+  --success-hover: #218838;
   --success-bg: #d4edda;
   --error: #dc3545;
+  --error-hover: #c82333;
   --error-bg: #f8d7da;
   --warning: #ffc107;
+  --warning-hover: #e0a800;
   --warning-bg: #fff3cd;
   --info: #a8a8a8;
+  --info-hover: #6c757d;
   --info-bg: #efefef;
 
   --font-family: 'Helvetica Neue', Arial, verdana, sans-serif;
@@ -188,38 +192,32 @@ body>*>.container {
 
 form.form {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: 1fr;
   gap: var(--row-gap);
 
   &.small-gap {
     gap: calc(var(--row-gap) / 2);
   }
 
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-
   .error-message {
     color: red;
     font-size: .8em;
     text-align: center;
-    grid-column: 2 / -1;
-
-    @media screen and (max-width: 768px) {
-      grid-column: 1 / -1;
-    }
+    grid-column: 1 / -1;
   }
 
   &.no-labels {
-    grid-template-columns: 1fr;
-
-    .form-field {
-      grid-template-columns: 1fr;
-    }
-
     label {
       display: none;
     }
+  }
+
+  &.max-width {
+    max-width: 400px;
+  }
+
+  &.align-center {
+    margin: 0 auto;
   }
 }
 
@@ -232,11 +230,6 @@ form.form {
 
   label {
     font-size: .8em;
-    text-align: right;
-
-    @media screen and (max-width: 768px) {
-      text-align: left;
-    }
   }
 
   &.error input, &.error textarea, &.error select {
@@ -634,6 +627,11 @@ ul.pending-requests-list {
 .pending-request-actions {
   display: flex;
   gap: 8px;
+
+  button {
+    padding: 6px 18px;
+    margin: -6px 0;
+  }
 }
 
 .h-size-1 {
@@ -683,6 +681,16 @@ label {
   opacity: .75;
 }
 
+.alert {
+  text-align: center;
+  border-radius: var(--button-border-radius);
+  padding: var(--button-padding);
+}
+
+.info {
+  color: var(--info);
+}
+
 .success {
   color: var(--success);
 }
@@ -693,14 +701,6 @@ label {
 
 .error {
   color: var(--error);
-}
-
-.alert {
-  text-align: center;
-  border-radius: var(--button-border-radius);
-  padding: var(--button-padding);
-  color: var(--info);
-  background-color: var(--info-bg);
 }
 
 .text-center {
@@ -723,5 +723,33 @@ a.avatar {
     object-fit: cover;
     border-radius: 50%;
     background-color: #ccc;
+  }
+}
+
+.invitation-input {
+  width: 100%;
+}
+
+.invitation-expiration {
+  font-size: .8em;
+  opacity: .75;
+  text-align: center;
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: #fff;
+
+  &:hover {
+    background-color: var(--success-hover);
+  }
+}
+
+.btn-error {
+  background-color: var(--error);
+  color: #fff;
+
+  &:hover {
+    background-color: var(--error-hover);
   }
 }

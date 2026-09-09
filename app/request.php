@@ -11,6 +11,10 @@ function handleRequest(): array
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $postAction = $_POST['action'] ?? '';
 
+        if ($postAction === 'create_membership_invitation') {
+            handleCreateMembershipInvitationRequest();
+        }
+
         if ($postAction === 'request_membership') {
             handleMembershipRequest();
         }

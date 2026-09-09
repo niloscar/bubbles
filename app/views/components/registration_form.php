@@ -18,7 +18,9 @@ $formFields = [
 
 ?>
 
-<form action="?p=register" method="post" class="form registration-form" novalidate>
+<form action="?p=register" method="post" class="form registration-form max-width align-center" novalidate>
+
+    <h2 class="h-size-3">Registrera dig</h2>
 
     <? foreach ($formFields as $field) {
         component('form_field', [
@@ -33,10 +35,12 @@ $formFields = [
         <button type="submit">Registrera</button>
     </div>
 
-    <div class="full-grid-width">
-        <?= displayFormErrorMessage($errorMessages, 'general') ?>
-    </div>
-
     <p>Har du redan ett konto? <a href="?p=login">Logga in här.</a></p>
+
+    <? if (!empty($errorMessages['general'])) { ?>
+        <div class="full-grid-width">
+            <?= displayFormErrorMessage($errorMessages, 'general') ?>
+        </div>
+    <? } ?>
 
 </form>

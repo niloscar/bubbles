@@ -84,14 +84,13 @@ function isGroupAdmin(PDO $pdo, int $groupId): bool
     if (!isLoggedIn()) return false;
 
     $stmt = $pdo->prepare(
-        "SELECT u.id, u.username, g.name
-        FROM users AS u
-        JOIN group_users AS gu ON gu.user_id = u.id
-        JOIN groups AS g ON g.id = gu.group_id
+        "SELECT 1
+        FROM group_users AS gu
         JOIN roles AS r ON r.id = gu.role_id
-        WHERE u.id = :user_id 
-        AND g.id = :group_id
-        AND r.name = 'admin'"
+        WHERE gu.user_id = :user_id
+          AND gu.group_id = :group_id
+          AND r.name = 'Admin'
+        LIMIT 1"
     );
 
     $stmt->execute([
@@ -99,9 +98,7 @@ function isGroupAdmin(PDO $pdo, int $groupId): bool
         'group_id' => $groupId
     ]);
 
-    $user = $stmt->fetch();
-
-    return (bool) $user['is_member'] ?? false;
+    return (bool) $stmt->fetchColumn();
 }
 
 function updateLastLogin(PDO $pdo, int $userId): void
