@@ -12,8 +12,10 @@ if (!$threadId) {
   return;
 }
 
+$data = $data ?? [];
+
 $pdo = db();
-$thread = getThreadById($pdo, $threadId);
+$thread = getThreadByIdWithComments($pdo, $threadId);
 
 if ($thread === false) {
   echo "<p>Kunde inte hitta tråden.</p>";
@@ -22,5 +24,24 @@ if ($thread === false) {
 
 component('breadcrumbs', ['thread' => $thread]); 
 ?>
-<h1 class="h-size-1"><?= $thread['subject'] ?></h1>
-<p><?= $thread['text'] ?></p>
+<div class="thread">
+  <section class="thread-start">
+    <div class="thread-start-body">
+      <h1 class="h-size-1"><?= $thread['subject'] ?></h1>
+      <?= formatUserText($thread['text']) ?>
+    </div>
+    <div class="thread-start-meta">
+      <?= formatTimeAgo($thread['created_at']) ?>
+      av
+      <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"><?= htmlspecialchars($thread['username']) ?></a>
+    </div>
+  </section>
+
+  <section class="thread-comments">
+    <? component('comment_list', ['thread' => $thread]); ?>
+  </section>
+
+  <section class="create-comment">
+    <? component('create_comment_form', $data); ?>
+  </section>
+</div>

@@ -41,3 +41,4 @@ require_once BASE_PATH . '/app/data/groups.php';
 require_once BASE_PATH . '/app/data/threads.php';
 require_once BASE_PATH . '/app/data/membership_requests.php';
 require_once BASE_PATH . '/app/data/membership_invitations.php';
+require_once BASE_PATH . '/app/data/comments.php';

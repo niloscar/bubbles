@@ -12,18 +12,15 @@
   <p>För att kunna delta i diskussioner och skapa grupper måste du vara inloggad. Om du inte har ett konto kan du registrera dig nedan.</p>
   <h2 class="h-size-3">Registrera dig</h2>
   <? component('registration_form'); ?>
-<? } else { 
-    $pdo = db();
-    $userid = $_SESSION['user_id'];
-    $groups = getGroupsByUserId($pdo, $userid);
+  <? } else {
+  $pdo = db();
+  $userid = $_SESSION['user_id'];
+  $groups = getGroupsByUserId($pdo, $userid);
 
-    if (count($groups) === 0) {
-        echo "<p>Du är inte medlem i några grupper. Gå med i en grupp eller skapa en ny.</p>";
-    } else {
-      ?>
-  <h2 class="h-size-3">Starta en ny diskussion</h2>
-  <? component('create_thread_form', ['groups' => $groups]);
-    }
-  ?>
-
-<? } ?>
+  if (count($groups) === 0) {
+    echo "<p>Du är inte medlem i några grupper. Gå med i en grupp eller skapa en ny.</p>";
+  } else { ?>
+    <h2 class="h-size-3">Starta en ny diskussion</h2>
+    <? component('create_thread_form', ['groups' => $groups]); ?>
+  <? }
+}
