@@ -12,7 +12,7 @@ $thread = $data['thread'] ?? null;
 
   <? if (!$group && !$thread) { ?>
 
-    <h1 class="h-size-rem">Grupper</h1>
+    <h1 class="h-size-inherit">Grupper</h1>
 
   <? } else { ?>
 

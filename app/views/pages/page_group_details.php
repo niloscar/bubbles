@@ -28,10 +28,12 @@ component('group_details', ['group' => $group]);
 <div class="group-content">
 
 <? if (!$isMember) {
-  displayAlert('Endast medlemmar kan ta del av eller delta i gruppens diskussioner.', 'info');
-  if (!isLoggedIn()) {
-    echo "<a href='?p=login'>Logga in</a>";
-  }
+  $message = isLoggedIn() 
+    ? 'Endast medlemmar kan delta i gruppens diskussioner.' 
+    : 'Endast inloggade medlemmar kan delta i gruppens diskussioner. <a href="?p=login">Logga in</a>';
+
+  displayAlert($message, 'info');
+
 } ?>
 
 <? if ($isAdmin) { ?>
@@ -50,7 +52,7 @@ component('group_details', ['group' => $group]);
   </section>
 
   <section class="create-thread">
-    <h2 class='h-size-3'>Starta ny diskussion</h2>
+    <h2 class='h-size-3'>Starta en ny diskussion</h2>
     <? component('create_thread_form', $data); ?>
   </section>
 <? } ?>

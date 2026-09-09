@@ -89,3 +89,16 @@ function formatSecondsToText(int $seconds): string
 
   return implode(', ', $parts);
 }
+
+function formatUserText(string $text): string
+{
+    $paragraphs = preg_split('/\R{2,}/', trim($text));
+
+    $html = '';
+
+    foreach ($paragraphs as $paragraph) {
+        $html .= '<p>' . nl2br(htmlspecialchars($paragraph)) . '</p>';
+    }
+
+    return $html;
+}
