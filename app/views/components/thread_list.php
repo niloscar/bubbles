@@ -11,6 +11,11 @@ $groupId = isset($_GET['gid'])
 $pdo = db();
 $threads = getThreadsByGroupId($pdo, $groupId);
 
+if (empty($threads)) {
+    displayAlert('Det finns inga diskussioner i den här gruppen än.', 'info');
+    return;
+}
+
 ?>
 <ul class="no-list-style thread-list">
   <?php foreach ($threads as $thread) { ?>

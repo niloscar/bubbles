@@ -40,7 +40,7 @@ function handleApproveMembershipRequest(): void
     return;
   }
 
-  // ONTODO: Give feedback to the user that the membership request was successfully approved
+  header('Location: ' . $_SERVER['REQUEST_URI']);
   exit;
 }
 
@@ -60,6 +60,6 @@ function handleRejectMembershipRequest(): void
         return;
     }
 
-    // ONTODO: Give feedback to the user that the membership request was successfully rejected
+    header('Location: ' . $_SERVER['REQUEST_URI']);
     exit;
 }
