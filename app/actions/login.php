@@ -32,29 +32,23 @@ function handleLoginRequest(): array
 
     foreach ($requiredFields as $field => $value) {
         if ($value === '') {
-            $errorMessages[] = [
-                'field' => $field,
-                'message' => 'Fältet är obligatoriskt.'
-            ];
+            $errorMessages[$field] = 'Fältet är obligatoriskt.';
         }
     }
 
     if (empty($errorMessages)) {
-        $user = authenticateUser(db(), $email, $password);
+        $pdo = db();
+        $user = authenticateUser($pdo, $email, $password);
 
         if (!$user) {
-            $errorMessages[] = [
-                'field' => 'general',
-                'message' => 'Fel mailadress eller lösenord. Vänligen försök igen.'
-            ];
+            $errorMessages['general'] = 'Fel mailadress eller lösenord. Vänligen försök igen.';
+        } else {
+            loginUser($user);
+            updateLastLogin($pdo, (int) $user['id']);
+
+            header('Location: ?p=start');
+            exit;
         }
-    }
-
-    if (empty($errorMessages)) {
-        loginUser($user);
-
-        header('Location: ?p=start');
-        exit;
     }
 
     return [

@@ -38,55 +38,34 @@ function handleRegisterRequest(): array
 
     foreach ($requiredFields as $field => $value) {
         if ($value === '') {
-            $errorMessages[] = [
-                'field' => $field,
-                'message' => 'Fältet är obligatoriskt.'
-            ];
+            $errorMessages[$field] = 'Fältet är obligatoriskt.';
         }
     }
 
     if ($username !== '' && !preg_match('/^[a-zA-Z0-9_-]{3,30}$/', $username)) {
-        $errorMessages[] = [
-            'field' => 'username',
-            'message' => 'Användarnamnet får endast innehålla 3–30 bokstäver, siffror, bindestreck och understreck.'
-        ];
+        $errorMessages['username'] = 'Användarnamnet får endast innehålla 3–30 bokstäver, siffror, bindestreck och understreck.';
     }
 
     if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMessages[] = [
-            'field' => 'email',
-            'message' => 'Mailadressen är inte giltig.'
-        ];
+        $errorMessages['email'] = 'Mailadressen är inte giltig.';
     }
 
     if ($password !== '' && strlen($password) < 8) {
-        $errorMessages[] = [
-            'field' => 'password',
-            'message' => 'Lösenordet måste innehålla minst 8 tecken.'
-        ];
+        $errorMessages['password'] = 'Lösenordet måste innehålla minst 8 tecken.';
     }
 
     if ($password !== '' && $confirmPassword !== '' && $password !== $confirmPassword) {
-        $errorMessages[] = [
-            'field' => 'confirm_password',
-            'message' => 'Lösenorden matchar inte.'
-        ];
+        $errorMessages['confirm_password'] = 'Lösenorden matchar inte.';
     }
 
     $pdo = db();
 
     if ($username !== '' && usernameExists($pdo, $username)) {
-        $errorMessages[] = [
-            'field' => 'username',
-            'message' => 'Användarnamnet är upptaget.'
-        ];
+        $errorMessages['username'] = 'Användarnamnet är upptaget.';
     }
 
     if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) && emailExists($pdo, $email)) {
-        $errorMessages[] = [
-            'field' => 'email',
-            'message' => 'Mailadressen är upptagen.'
-        ];
+        $errorMessages['email'] = 'Mailadressen är upptagen.';
     }
 
     if (empty($errorMessages)) {
@@ -106,10 +85,7 @@ function handleRegisterRequest(): array
             header('Location: ?p=login&registered=1');
             exit;
         } catch (PDOException $e) {
-            $errorMessages[] = [
-                'field' => 'general',
-                'message' => 'Ett fel uppstod vid registrering. Vänligen försök igen senare.'
-            ];
+            $errorMessages['general'] = 'Ett fel uppstod vid registrering. Vänligen försök igen senare.';
         }
     }
 

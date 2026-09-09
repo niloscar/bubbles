@@ -103,3 +103,16 @@ function isGroupAdmin(PDO $pdo, int $groupId): bool
 
     return (bool) $user['is_member'] ?? false;
 }
+
+function updateLastLogin(PDO $pdo, int $userId): void
+{
+    $stmt = $pdo->prepare(
+        'UPDATE users
+         SET last_login = CURRENT_TIMESTAMP
+         WHERE id = :user_id'
+    );
+
+    $stmt->execute([
+        'user_id' => $userId
+    ]);
+}

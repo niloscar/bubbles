@@ -2,18 +2,16 @@
 
 /**
  * Form field component, used for rendering form fields with error messages
- * 
- * @var array{field: array<string, mixed>, formData?: array<string, string>, errorMessages?: array<string>} $data
  */
 
-$field = $data['field'];
+$field = $data['field'] ?? [];
 $formData = $data['formData'] ?? [];
 $errorMessages = $data['errorMessages'] ?? [];
 
 $value = '';
 
 if ($field['type'] !== 'password') {
-    $value = htmlspecialchars($formData[$field['name']] ?? '');
+    $value = $formData[$field['name']] ?? '';
 }
 
 $errorMessage = displayFormErrorMessage(
@@ -23,21 +21,70 @@ $errorMessage = displayFormErrorMessage(
 
 $errorClass = $errorMessage ? ' error' : '';
 $requiredAttr = $field['required'] ? 'required' : '';
+$placeholderAttr = !empty($field['placeholder'])
+    ? 'placeholder="' . htmlspecialchars($field['placeholder']) . '"'
+    : '';
 
 ?>
 
 <div class="form-field<?= $errorClass ?>">
-    <label for="<?= $field['name'] ?>">
-        <?= $field['label'] ?>
+    <label for="<?= htmlspecialchars($field['name']) ?>">
+        <?= htmlspecialchars($field['label']) ?>
     </label>
 
-    <input
-        type="<?= $field['type'] ?>"
-        id="<?= $field['name'] ?>"
-        name="<?= $field['name'] ?>"
-        value="<?= $value ?>"
-        <?= $requiredAttr ?>
-    >
+    <?php if ($field['type'] === 'textarea') { ?>
+
+        <textarea
+            id="<?= htmlspecialchars($field['name']) ?>"
+            name="<?= htmlspecialchars($field['name']) ?>"
+            <?= $placeholderAttr ?>
+            <?= $requiredAttr ?>><?= htmlspecialchars((string) $value) ?></textarea>
+
+    <?php } elseif ($field['type'] === 'select') {
+
+        $options = $field['options'] ?? [];
+
+        if ($value !== '') {
+            $selectedValue = $value;
+        } elseif (count($options) === 1) {
+            $selectedValue = $options[0]['value'];
+        } else {
+            $selectedValue = '';
+        }
+    ?>
+
+        <select
+            id="<?= htmlspecialchars($field['name']) ?>"
+            name="<?= htmlspecialchars($field['name']) ?>"
+            <?= $requiredAttr ?>>
+
+            <?php if (count($options) > 1 && !empty($field['default'])) { ?>
+                <option value="" disabled <?= $selectedValue === '' ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($field['default']) ?>
+                </option>
+            <?php } ?>
+
+            <?php foreach ($options as $option) { ?>
+                <option
+                    value="<?= htmlspecialchars((string) $option['value']) ?>"
+                    <?= (string) $selectedValue === (string) $option['value'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($option['label']) ?>
+                </option>
+            <?php } ?>
+
+        </select>
+
+    <?php } else { ?>
+
+        <input
+            type="<?= htmlspecialchars($field['type']) ?>"
+            id="<?= htmlspecialchars($field['name']) ?>"
+            name="<?= htmlspecialchars($field['name']) ?>"
+            value="<?= htmlspecialchars((string) $value) ?>"
+            <?= $placeholderAttr ?>
+            <?= $requiredAttr ?>>
+
+    <?php } ?>
 
     <?= $errorMessage ?>
 </div>

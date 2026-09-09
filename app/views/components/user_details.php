@@ -14,7 +14,7 @@
   }
 
   $pdo = db();
-  $user = getUserById($pdo, $userId);
+  $user = getUserAndStatsById($pdo, $userId);
 
   if ($user === false) {
     echo "<p>Kunde inte hitta användaren.</p>";
@@ -34,9 +34,15 @@
 ?>
 
 <h1 class="h-size-1"><?= htmlspecialchars($user['username']) ?></h1>
-<p><?= htmlspecialchars($user['fname'] . ' ' . $user['lname']) ?></p>
-<p><?= htmlspecialchars($user['email']) ?></p>
-<p>Skapad för <?= formatTimeAgo(htmlspecialchars($user['registered_at'])) ?></p>
+<ul class="no-list-style n-cols-2 first-col-auto">
+  <li><label>Namn</label> <span><?= htmlspecialchars($user['fname'] . ' ' . $user['lname']) ?></span></li>
+  <li class="space-beneeth"><label>E-postadress</label> <span><?= htmlspecialchars($user['email']) ?></span></li>
+  <li><label>Medlem sedan</label> <span><?= formatDateToText($user['registered_at']) ?></span></li>
+  <li class="space-beneeth"><label>Senaste inloggning</label> <span><?= $user['last_login'] ? formatTimeAgo($user['last_login']) : 'aldrig' ?></span></li>
+  <li><label>Medlem i grupper</label> <span><?= $user['group_count'] ?> st</span></li>
+  <li><label>Skapade trådar</label> <span><?= $user['thread_count'] ?> st</span></li>
+  <li><label>Antal kommentarer</label> <span><?= $user['comment_count'] ?> st</span></li>
+</ul>
 <h2 class="h-size-3">Grupper</h2>
 <? if (empty($groups)) { ?>
   <p><?= htmlspecialchars($user['username']) ?> är inte medlem i några grupper.</p>

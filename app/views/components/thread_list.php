@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Group threads component view
+ * Thread list component view
  */
 
 $groupId = isset($_GET['gid'])
@@ -12,7 +12,6 @@ $pdo = db();
 $threads = getThreadsByGroupId($pdo, $groupId);
 
 ?>
-<h2>Trådar</h2>
 <ul class="no-list-style group-threads">
   <?php foreach ($threads as $thread) { ?>
     <li>

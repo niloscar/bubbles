@@ -24,9 +24,7 @@ component('group_details', ['group' => $group]);
 
 if (!$isMember) {
   echo "<p>Endast medlemmar kan ta del av eller delta i gruppens diskussioner.</p>";
-  if (isLoggedIn()) {
-    component('membership_status', ['group' => $group]);
-  } else {
+  if (!isLoggedIn()) {
     echo "<a href='?p=login'>Logga in</a>";
   }
 }
@@ -43,5 +41,9 @@ if ($isAdmin) {
 }
 
 if ($isMember) {
-  component('group_threads');
+  echo "<h2 class='h-size-3'>Diskussioner</h2>";
+  component('thread_list');
+
+  echo "<h3 class='h-size-4'>Starta ny diskussion</h2>";
+  component('create_thread_form');
 }

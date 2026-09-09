@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Request handler
+ */
+
 function handleRequest(): array
 {
     $viewData = [];
@@ -17,6 +21,18 @@ function handleRequest(): array
 
         if ($postAction === 'reject_membership') {
             handleRejectMembershipRequest();
+        }
+
+        if ($postAction === 'create_group') {
+            $viewData = handleCreateGroupRequest();
+        }
+
+        if ($postAction === 'create_thread') {
+            $viewData = handleCreateThreadRequest();
+        }
+
+        if ($postAction === 'create_comment') {
+            $viewData = handleCreateCommentRequest();
         }
     }
 
