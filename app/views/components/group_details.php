@@ -2,11 +2,9 @@
 
 /**
  * Group details component
- * 
- * @var array{group: array<string, mixed>|false} $data
  */
 
-$group = $data['group'];
+$group = $data['group'] ?? null;
 
 if ($group === false) {
   echo "<p>Kunde inte hitta gruppen.</p>";
@@ -28,15 +26,6 @@ $group['admins'] = array_filter(
 <h1><?= htmlspecialchars($group['name']) ?></h1>
 
 <p class="group-description"><?= htmlspecialchars($group['description']) ?></p>
-<p class="group-meta">Skapad <?= formatDateToText($group['created_at']) ?></p>
-<p class="group-meta"><?= count($group['admins']) === 1 ? 'Administratör:' : count($group['admins']) . ' Administratörer:' ?></p>
-
-<ul>
-  <?php foreach ($group['admins'] as $admin) { ?>
-    <li>
-      <a href="?p=user&amp;uid=<?= urlencode($admin['id']) ?>">
-        <?= htmlspecialchars($admin['fname'] . ' ' . $admin['lname']) ?>
-      </a>
-    </li>
-  <?php } ?>
-</ul>
+<!-- <p class="group-meta">Skapad <?= formatDateToText($group['created_at']) ?></p> -->
+<? component('admin_list', ['group' => $group]); ?>
+<? component('group_meta', ['group' => $group]); ?>

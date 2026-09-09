@@ -2,8 +2,6 @@
 
 /**
  * Login form component
- * 
- * @var array{errorMessages?: array<string>, formData?: array<string, string>} $data
  */
 
 $errorMessages = $data['errorMessages'] ?? [];

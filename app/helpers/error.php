@@ -6,13 +6,9 @@
 
 function displayFormErrorMessage(array $errorMessages, $field = null)
 {
-  foreach ($errorMessages as $error) {
-    if (($error['field'] ?? null) === $field) {
-      return "<span class='error-message'>{$error['message']}</span>";
-    }
-  }
+  if (!isset($errorMessages[$field])) return '';
 
-  return '';
+  return "<span class='error-message'>{$errorMessages[$field]}</span>";
 }
 
 function pageNotFound(): void

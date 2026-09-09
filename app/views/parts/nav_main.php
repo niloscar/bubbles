@@ -27,7 +27,7 @@ function isActive(string $slug, string $currentPage): bool
 ?>
 
 <nav class="nav-main">
-  <div class="container">
+  <div class="container v-padding-1">
     <ul>
       <?php foreach (NAV_MAIN as $page) { ?>
         <li>

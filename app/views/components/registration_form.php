@@ -33,9 +33,9 @@ $formFields = [
         <button type="submit">Registrera</button>
     </div>
 
-<div class="full-grid-width">
-    <?= displayFormErrorMessage($errorMessages, 'general') ?>
-</div>
+    <div class="full-grid-width">
+        <?= displayFormErrorMessage($errorMessages, 'general') ?>
+    </div>
 
     <p>Har du redan ett konto? <a href="?p=login">Logga in här.</a></p>
 

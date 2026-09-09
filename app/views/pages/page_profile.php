@@ -71,8 +71,8 @@ $user = isset($_SESSION['user_id'])
 
 ?>
 <ul class="no-list-style n-cols-2 first-col-auto">
-  <li><label>Medlem sedan</label> <span><?= formatDate($user['registered_at']) ?></span></li>
-  <li><label>Senaste inloggning</label> <span><?= $user['last_login'] ? $user['last_login'] : 'aldrig' ?></span></li>
+  <li><label>Medlem sedan</label> <span><?= formatDateToText($user['registered_at']) ?></span></li>
+  <li class="space-beneeth"><label>Senaste inloggning</label> <span><?= $user['last_login'] ? formatTimeAgo($user['last_login']) : 'aldrig' ?></span></li>
   <li><label>Medlem i grupper</label> <span><?= $user['group_count'] ?> st</span></li>
   <li><label>Skapade trådar</label> <span><?= $user['thread_count'] ?> st</span></li>
   <li><label>Antal kommentarer</label> <span><?= $user['comment_count'] ?> st</span></li>
