@@ -15,6 +15,10 @@ function handleRequest(): array
             handleCreateMembershipInvitationRequest();
         }
 
+        if ($postAction === 'accept_membership_invitation') {
+            handleAcceptMembershipInvitationRequest();
+        }
+
         if ($postAction === 'request_membership') {
             handleMembershipRequest();
         }

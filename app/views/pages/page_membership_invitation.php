@@ -7,7 +7,7 @@
 $invite = $data['invite'] ?? null;
 
 if ($invite['used']) {
-  displayAlert('Inbjudningslänken har redan använts.', 'warning');
+  displayAlert('Inbjudningslänken har redan använts.', 'error');
   return;
 }
 
@@ -28,7 +28,9 @@ if ($timeDiff <= 0) {
   av användaren 
   <strong><a href="?p=user&uid=<?= urlencode($invite['inviter_id']) ?>"><?= htmlspecialchars($invite['inviter_username']) ?></a></strong>.
 </p>
-<p>För att kunna acceptera inbjudan måste du vara inloggad.</p>
+<? if (!isLoggedIn()) { ?>
+  <p>För att kunna acceptera inbjudan måste du vara inloggad.</p>
+<? } ?>
 <form class="form form-invitation" method="POST">
     <input type="hidden" name="action" value="accept_membership_invitation">
     <input type="hidden" name="token" value="<?= htmlspecialchars($invite['token']) ?>">

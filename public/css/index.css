@@ -331,6 +331,12 @@ button {
   &:active {
     transform: scale(0.97);
   }
+
+  .small {
+    height: auto;
+    padding: 4px 12px;
+    margin: -4px -8px;
+  }
 }
 
 ul.no-list-style {
