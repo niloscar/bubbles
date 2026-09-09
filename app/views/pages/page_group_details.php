@@ -12,6 +12,8 @@ if (!$groupId) {
   return;
 }
 
+$data = $data ?? [];
+
 $pdo = db();
 $group = getGroupById($pdo, $groupId);
 $role = getGroupRole($pdo, $groupId);
@@ -21,29 +23,35 @@ $isAdmin = strtolower($role) === 'admin';
 component('breadcrumbs', ['group' => $group]);
 
 component('group_details', ['group' => $group]);
+?>
 
-if (!$isMember) {
-  echo "<p>Endast medlemmar kan ta del av eller delta i gruppens diskussioner.</p>";
+<div class="group-content">
+
+<? if (!$isMember) {
+  displayAlert('Endast medlemmar kan ta del av eller delta i gruppens diskussioner.', 'info');
   if (!isLoggedIn()) {
     echo "<a href='?p=login'>Logga in</a>";
   }
-}
+} ?>
 
-if ($isAdmin) {
-?>
+<? if ($isAdmin) { ?>
 
 <h2 class="h-size-3">Administrera gruppen</h2>
 
 <h3 class="h-size-4">Medlemsförfrågningar</h3>
 <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
 
-<?
-}
+<? } ?>
 
-if ($isMember) {
-  echo "<h2 class='h-size-3'>Diskussioner</h2>";
-  component('thread_list');
+<? if ($isMember) { ?>
+  <section class="group-discussions">
+    <h2 class="h-size-3">Diskussioner</h2>
+    <? component('thread_list'); ?>
+  </section>
 
-  echo "<h3 class='h-size-4'>Starta ny diskussion</h2>";
-  component('create_thread_form');
-}
+  <section class="create-thread">
+    <h2 class='h-size-3'>Starta ny diskussion</h2>
+    <? component('create_thread_form', $data); ?>
+  </section>
+<? } ?>
+</div>

@@ -34,6 +34,7 @@ require_once BASE_PATH . '/app/helpers/error.php';
 require_once BASE_PATH . '/app/helpers/auth.php';
 require_once BASE_PATH . '/app/helpers/translate.php';
 require_once BASE_PATH . '/app/helpers/avatar.php';
+require_once BASE_PATH . '/app/helpers/alert.php';
 
 require_once BASE_PATH . '/app/data/users.php';
 require_once BASE_PATH . '/app/data/groups.php';

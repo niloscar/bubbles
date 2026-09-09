@@ -12,16 +12,16 @@ $pdo = db();
 $threads = getThreadsByGroupId($pdo, $groupId);
 
 ?>
-<ul class="no-list-style group-threads">
+<ul class="no-list-style thread-list">
   <?php foreach ($threads as $thread) { ?>
     <li>
-      <p>
-        <a href="?p=thread&tid=<?= urlencode($thread['id']) ?>">
-          <?= htmlspecialchars($thread['subject']) ?>
-        </a>
+      <a href="?p=thread&tid=<?= urlencode($thread['id']) ?>">
+        <?= htmlspecialchars($thread['subject']) ?>
+      </a>
+      <span>
         <?= formatTimeAgo($thread['created_at']) ?>
-        <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"> av <?= htmlspecialchars($thread['username']) ?></a>
-      </p>
+        av <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"> <?= htmlspecialchars($thread['username']) ?></a>
+      </span>
     </li>
   <?php } ?>
 </ul>
