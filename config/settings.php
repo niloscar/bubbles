@@ -4,7 +4,7 @@
  * Settings
  */
 
-const SITE_NAME = 'Bubblor';
+const SITE_NAME = 'Bubbla';
 const PAGE_URL = 'http://localhost:8080';
 const SANDBOX = true;
 

@@ -43,44 +43,49 @@ function handleCreateMembershipInvitationRequest(): void
 
 function handleAcceptMembershipInvitationRequest(): void
 {
-  if (!isLoggedIn()) {
-    header('Location: ?p=login');
+    if (!isLoggedIn()) {
+        header('Location: ?p=login');
+        exit;
+    }
+
+    $token = $_POST['token'] ?? null;
+
+    if (!is_string($token) || $token === '') {
+        http_response_code(400);
+        exit;
+    }
+
+    $pdo = db();
+    $userId = $_SESSION['user_id'];
+
+    $invite = getMembershipInvitationByToken($pdo, $token);
+
+    if (!$invite) pageNotFound();
+
+    $groupId = (int) $invite['group_id'];
+
+    if ($invite['used']) {
+        header('Location: ?p=invitation&token=' . urlencode($token));
+        exit;
+    }
+
+    if (strtotime($invite['expires_at']) <= time()) {
+        header('Location: ?p=invitation&token=' . urlencode($token));
+        exit;
+    }
+
+    if (getGroupRole($pdo, $groupId) !== false) {
+        header('Location: ?p=group&gid=' . urlencode($groupId));
+        exit;
+    }
+
+    $success = acceptMembershipInvitation($pdo, $token, $groupId, $userId);
+
+    if (!$success) {
+        http_response_code(500);
+        exit;
+    }
+
+    header('Location: ?p=group&gid=' . urlencode($groupId));
     exit;
-  }
-
-  $token = $_POST['token'] ?? null;
-
-  if (!is_string($token) || $token === '') {
-    http_response_code(400);
-    exit;
-  }
-
-  $pdo = db();
-  $userId = $_SESSION['user_id'];
-
-  $invite = getMembershipInvitationByToken($pdo, $token);
-
-  if (!$invite) {
-    pageNotFound();
-  }
-
-  if ($invite['used']) {
-    header('Location: ?p=invitation&token=' . urlencode($token));
-    exit;
-  }
-
-  if (strtotime($invite['expires_at']) <= time()) {
-    header('Location: ?p=invitation&token=' . urlencode($token));
-    exit;
-  }
-
-  $success = acceptMembershipInvitation($pdo, $token, $invite['group_id'], $userId);
-
-  if (!$success) {
-    http_response_code(500);
-    exit;
-  }
-
-  header('Location: ?p=group&gid=' . urlencode($invite['group_id']));
-  exit;
 }

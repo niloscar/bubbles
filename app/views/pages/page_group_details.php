@@ -45,30 +45,29 @@ $users = getUsersByGroupId($pdo, $groupId);
   
 ?>
 <section class="group-admin">
-  <h2 class="h-size-3">Administrera gruppen</h2>
+  <h2 class="h-size-3">Administrera</h2>
 
   <h3 class="h-size-4">Medlemsförfrågningar</h3>
   <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
 
   <h3 class="h-size-4">Hantera medlemmar</h3>
   <ul class="no-list-style group-members">
-    <? foreach ($users as $user) { ?>
+    <? foreach ($users as $user) { 
+      $isMember = strtolower($user['role']) === 'member';
+      $isAdmin = strtolower($user['role']) === 'admin';
+      ?>
       <li>
         <a href="?p=user&uid=<?= urlencode($user['id']) ?>"><?= htmlspecialchars($user['username']) ?></a>
-        <? if (strtolower($user['role']) === 'admin') { ?>
-          <span class="user-role">Admin</span>
-        <? } else { ?>
           <form method="POST" class="remove-member-form">
             <input type="hidden" name="action" value="remove_member">
             <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-            <select name="role" class="role-select">
-              <option value="member" <?= strtolower($user['role']) === 'member' ? 'selected' : '' ?>>Medlem</option>
-              <option value="admin" <?= strtolower($user['role']) === 'admin' ? 'selected' : '' ?>>Admin</option>
+            <select name="role" class="role-select small" <?= $isAdmin ? 'disabled' : '' ?>>
+              <option value="member" <?= $isMember ? 'selected' : '' ?>>Medlem</option>
+              <option value="admin" <?= $isAdmin ? 'selected' : '' ?>>Admin</option>
             </select>
-            <button type="submit">Ta bort medlem</button>
+            <button type="submit" class="small" <?= $isAdmin ? 'disabled' : '' ?>>Ta bort medlem</button>
           </form>
-        <? } ?>
       </li>
     <? } ?>
   </ul>
@@ -82,8 +81,7 @@ $users = getUsersByGroupId($pdo, $groupId);
     <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
   </form>
   <? } else { ?>
-    <a id="invitation-link" href="<?= htmlspecialchars($invitationLink) ?>" class="invitation-input" readonly><?= htmlspecialchars($invitationLink) ?></a>
-    <p><i>Observera att vem som helst som har länken kan gå med i gruppen.</i></p>
+    <a id="invitation-link" href="<?= htmlspecialchars($invitationLink) ?>" class="invitation-link" readonly><?= htmlspecialchars($invitationLink) ?></a>
   <? } ?>
 
 </section>
@@ -96,7 +94,7 @@ $users = getUsersByGroupId($pdo, $groupId);
   </section>
 
   <section class="create-thread">
-    <h2 class='h-size-3'>Starta en ny diskussion</h2>
+    <h2 class='h-size-2 text-center'>Starta en ny diskussion</h2>
     <? component('create_thread_form', $data); ?>
   </section>
 <? } ?>

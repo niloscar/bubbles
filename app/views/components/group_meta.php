@@ -6,6 +6,9 @@
 
 $group = $data['group'] ?? null;
 
+$users = $group['users'] ?? [];
+$userList = array_map(fn ($user) => htmlspecialchars($user['username']), $users);
+
 ?>
 <ul class="no-list-style group-meta">
     <? if (isLoggedIn()) { ?>
@@ -17,7 +20,7 @@ $group = $data['group'] ?? null;
         <label>Senaste aktivitet:</label>
         <span><?= ($group['last_activity'] !== null) ? formatTimeAgo(htmlspecialchars($group['last_activity'])) : 'Ingen aktivitet' ?></span>
     </li>
-    <li>
+    <li title="<?= implode(', ', $userList) ?>">
         <label>Medlemmar:</label>
         <span><?= htmlspecialchars($group['user_count']) ?></span>
     </li>

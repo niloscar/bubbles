@@ -15,8 +15,7 @@ $data = $data ?? [];
 <? } ?>
 
 <? component('group_list') ?>
-
 <? if (isLoggedIn()) { ?>
-  <h2 class="h-size-3">Skapa en ny grupp</h2>
+  <h2 class="h-size-2 text-center">Skapa en ny grupp</h2>
   <? component('create_group_form', $data) ?>
-<? } ?>
+<? }

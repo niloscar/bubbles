@@ -24,8 +24,8 @@ if (empty($threads)) {
         <?= htmlspecialchars($thread['subject']) ?>
       </a>
       <span>
-        <?= formatTimeAgo($thread['created_at']) ?>
-        av <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"> <?= htmlspecialchars($thread['username']) ?></a>
+        <?= formatTimeAgo($thread['last_activity']) ?>
+        av <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"> <?= htmlspecialchars($thread['last_activity_username']) ?></a>
       </span>
     </li>
   <?php } ?>

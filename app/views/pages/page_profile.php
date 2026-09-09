@@ -11,7 +11,7 @@ $user = isset($_SESSION['user_id'])
 
 ?>
 
-<h1 class="h-size-1"><?= pageTitle() ?> för <?= $user['username'] ?></h1>
+<h1 class="h-size-1">Din profil</h1>
 
 <?php
 
@@ -78,6 +78,9 @@ $user = isset($_SESSION['user_id'])
   <li><label>Antal kommentarer</label> <span><?= $user['comment_count'] ?> st</span></li>
 </ul>
 
+<h2 class="h-size-3">Medlemsförfrågningar</h2>
+<? component('pending_requests_list'); ?>
+
 <h2 class="h-size-3">Uppdatera profil</h2>
 <form method="post" class="form profile-form">
   <? foreach ($profileFormFields as $fieldName => $field) { ?>
@@ -107,10 +110,6 @@ $user = isset($_SESSION['user_id'])
 
 <?php
 
-// ONTODO: Add a form for displaying and updating the user's information.
-
-// ONTODO: Add a form for changing the user's password.
-
 // ONTODO: Add a form for uploading and changing the user's avatar.
 
 // ONTODO: Add a form for deleting the user's account.
@@ -119,4 +118,4 @@ $user = isset($_SESSION['user_id'])
 
 // ONTODO: Add a list of the user's latest comments.
 
-component('pending_requests_list');
+?>

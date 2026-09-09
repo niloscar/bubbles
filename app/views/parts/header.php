@@ -17,12 +17,6 @@
 
 <body>
   <header class="page-header">
-    <div class="container">
-      <h1><?= SITE_NAME ?></h1>
-      <? if (SANDBOX) { ?>
-        <p style="color: red; font-weight: bold;">Sandbox</p>
-      <? } ?>
-    </div>
   </header>
   <? part('nav_main') ?>
 
