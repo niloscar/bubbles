@@ -31,9 +31,10 @@ component('breadcrumbs', ['thread' => $thread]);
       <?= formatUserText($thread['text']) ?>
     </div>
     <div class="thread-start-meta">
+      <i class="icon icon-pulse"></i>
       <?= formatTimeAgo($thread['created_at']) ?>
       av
-      <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"><?= htmlspecialchars($thread['username']) ?></a>
+      <strong><a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"><?= htmlspecialchars($thread['username']) ?></a></strong>
     </div>
   </section>
 

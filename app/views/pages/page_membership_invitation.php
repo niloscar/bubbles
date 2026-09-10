@@ -21,24 +21,31 @@ if ($timeDiff <= 0) {
 }
 
 ?>
-<h1 class="h-size-1">Inbjudan</h1>
-<p>
-  Du har blivit inbjuden till gruppen 
-  <strong><a href="?p=group&gid=<?= urlencode($invite['group_id']) ?>"><?= htmlspecialchars($invite['group_name']) ?></a></strong> 
-  av användaren 
-  <strong><a href="?p=user&uid=<?= urlencode($invite['inviter_id']) ?>"><?= htmlspecialchars($invite['inviter_username']) ?></a></strong>.
-</p>
-<? if (!isLoggedIn()) { ?>
-  <p>För att kunna acceptera inbjudan måste du vara inloggad.</p>
-<? } ?>
-<form class="form form-invitation" method="POST">
+<div class="page-membership-invitation">
+  <h1 class="h-size-1 text-center">
+    <i class="icon icon-envelope"></i>
+    <span>Inbjudan</span>
+  </h1>
+  <p class="text-center">
+    Du har blivit inbjuden till gruppen
+    <strong><a href="?p=group&gid=<?= urlencode($invite['group_id']) ?>"><?= htmlspecialchars($invite['group_name']) ?></a></strong>
+    av användaren
+    <strong><a href="?p=user&uid=<?= urlencode($invite['inviter_id']) ?>"><?= htmlspecialchars($invite['inviter_username']) ?></a></strong>.
+  </p>
+  <? if (!isLoggedIn()) { ?>
+    <p class="text-center">För att kunna acceptera inbjudan måste du vara inloggad.</p>
+  <? } ?>
+  <p class="invitation-expiration">Länken är giltig i <span id="countdown"><?= formatSecondsToText($timeDiff) ?></span>.</p>
+  <form class="form form-invitation" method="POST">
     <input type="hidden" name="action" value="accept_membership_invitation">
     <input type="hidden" name="token" value="<?= htmlspecialchars($invite['token']) ?>">
-  <div class="form-actions">
-      <button class="btn btn-accept" <?= (!isLoggedIn()) ? 'disabled' : '' ?>>Acceptera inbjudan</button>
-  </div>
-</form>
-<p class="invitation-expiration">Länken är giltig i ytterligare <span id="countdown"><?= formatSecondsToText($timeDiff) ?></span>.</p>
+    <div class="form-actions">
+      <button class="btn btn-accept" <?= (!isLoggedIn()) ? 'disabled' : '' ?>>
+        <i class="icon icon-check"></i> Acceptera inbjudan
+      </button>
+    </div>
+  </form>
+</div>
 
 <script type="text/javascript">
   const countdownElement = document.getElementById('countdown')

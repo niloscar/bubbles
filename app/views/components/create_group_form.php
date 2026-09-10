@@ -32,6 +32,9 @@ $formFields = [
   } ?>
   <?= displayFormErrorMessage($data['errorMessages'] ?? [], 'general') ?>
   <div class="form-actions">
-    <button type="submit" name="action" value="create_group">Skapa grupp</button>
+    <button type="submit" name="action" value="create_group">
+      <i class="icon icon-plus"></i>
+      <span>Skapa grupp</span>
+    </button>
   </div>
 </form>

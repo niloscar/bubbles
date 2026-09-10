@@ -31,8 +31,14 @@ $formFields = [
     } ?>
 
     <div class="form-actions n-cols-2">
-        <button type="reset">Rensa</button>
-        <button type="submit">Registrera</button>
+        <button type="reset" class="btn-accent-dk">
+            <i class="icon icon-backspace"></i>
+            <span>Rensa</span>
+        </button>
+        <button type="submit">
+            <i class="icon icon-key"></i>
+            <span>Registrera</span>
+        </button>
     </div>
 
     <p>Har du redan ett konto? <a href="?p=login">Logga in här.</a></p>

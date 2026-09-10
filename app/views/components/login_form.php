@@ -37,7 +37,10 @@ $formFields = [
     } ?>
 
     <div class="form-actions">
-        <button type="submit">Logga in</button>
+        <button type="submit">
+            <i class="icon icon-key"></i>
+            <span>Logga in</span>
+        </button>
     </div>
 
     <p>Har du inget konto? <a href="?p=register">Registrera dig här.</a></p>
