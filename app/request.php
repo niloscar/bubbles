@@ -31,6 +31,14 @@ function handleRequest(): array
             handleRejectMembershipRequest();
         }
 
+        if ($postAction === 'update_member_role') {
+            handleUpdateMemberRoleRequest();
+        }
+
+        if ($postAction === 'remove_member') {
+            handleRemoveMemberRequest();
+        }
+
         if ($postAction === 'create_group') {
             $viewData = handleCreateGroupRequest();
         }
