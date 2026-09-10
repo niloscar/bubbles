@@ -917,7 +917,7 @@ ul.group-meta {
 
 .pending-requests-list {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: repeat(3, max-content);
   gap: 16px;
 
   >li>h3 {
@@ -935,8 +935,9 @@ ul.group-meta {
   gap: 8px;
 
   button {
-    margin: -6px 0;
-    padding: 6px 18px;
+    padding: 4px;
+    margin: 0;
+    background-color: transparent;
   }
 }
 

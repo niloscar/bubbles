@@ -32,14 +32,14 @@ if (empty($pendingRequests)) {
 
                 <div class="pending-request-actions">
                     <form method="POST">
-                        <button class="btn-success" name="action" value="approve_membership" title="Godkänn">
+                        <button class="icon-btn small" name="action" value="approve_membership" title="Godkänn">
                             <i class="icon icon-check success"></i>
                         </button>
                         <input type="hidden" name="request_id" value="<?= (int) $request['id'] ?>">
                     </form>
 
                     <form method="POST" value="reject_membership">
-                        <button class="btn-error" name="action" value="reject_membership" title="Neka">
+                        <button class="icon-btn small" name="action" value="reject_membership" title="Neka">
                             <i class="icon icon-x error"></i>
                         </button>
                         <input type="hidden" name="request_id" value="<?= (int) $request['id'] ?>">
