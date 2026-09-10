@@ -26,10 +26,10 @@ const NAV_MAIN = [
 ];
 
 const NAV_FOOTER = [
-  ['title' => 'README', 'slug' => 'about', 'view' => 'page_about', 'icon' => 'book-open-text'],
-  ['title' => 'Uppgiftsbeskrivning', 'slug' => 'assignment_description', 'view' => 'page_assignment_description', 'icon' => 'clipboard-text'],
-  ['title' => 'Uppgiftschecklista', 'slug' => 'assignment_checklist', 'view' => 'page_assignment_checklist', 'icon' => 'list-checks'],
-  ['title' => 'Databasdiagram', 'slug' => 'er_diagram', 'view' => 'page_er_diagram', 'icon' => 'database'],
+  ['title' => 'README', 'slug' => 'readme', 'url' => 'https://github.com/niloscar/sysdev-community-forum/blob/main/README.md', 'icon' => 'book-open-text'],
+  ['title' => 'Uppgiftsbeskrivning', 'slug' => 'assignment_description', 'url' => 'https://github.com/niloscar/sysdev-community-forum/blob/main/docs/assignment-description.md', 'icon' => 'clipboard-text'],
+  ['title' => 'Uppgiftschecklista', 'slug' => 'assignment_checklist', 'url' => 'https://github.com/niloscar/sysdev-community-forum/blob/main/docs/assignment-checklist.md', 'icon' => 'list-checks'],
+  ['title' => 'Databasdiagram', 'slug' => 'er_diagram', 'url' => 'https://github.com/niloscar/sysdev-community-forum/blob/main/docs/er-diagram.png', 'icon' => 'database'],
 ];
 
 const NAV_CONTACT = [
