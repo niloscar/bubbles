@@ -65,7 +65,8 @@ $formFields = [
 
   <div class="form-actions">
     <button type="submit" name="action" value="create_thread">
-      Skapa diskussionstråd
+      <i class="icon icon-paper-plane-tilt"></i>
+      <span>Skapa diskussionstråd</span>
     </button>
   </div>
 </form>

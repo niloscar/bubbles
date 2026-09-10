@@ -53,20 +53,22 @@ $users = getUsersByGroupId($pdo, $groupId);
   <h3 class="h-size-4">Hantera medlemmar</h3>
   <ul class="no-list-style group-members">
     <? foreach ($users as $user) { 
-      $isMember = strtolower($user['role']) === 'member';
-      $isAdmin = strtolower($user['role']) === 'admin';
+      $userIsMember = strtolower($user['role']) === 'member';
+      $userIsAdmin = strtolower($user['role']) === 'admin';
       ?>
       <li>
         <a href="?p=user&uid=<?= urlencode($user['id']) ?>"><?= htmlspecialchars($user['username']) ?></a>
-          <form method="POST" class="remove-member-form">
+          <form method="POST" class="handle-member-form">
             <input type="hidden" name="action" value="remove_member">
             <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-            <select name="role" class="role-select small" <?= $isAdmin ? 'disabled' : '' ?>>
-              <option value="member" <?= $isMember ? 'selected' : '' ?>>Medlem</option>
-              <option value="admin" <?= $isAdmin ? 'selected' : '' ?>>Admin</option>
+            <select name="role" class="role-select small" <?= $userIsAdmin ? 'disabled' : '' ?>>
+              <option value="member" <?= $userIsMember ? 'selected' : '' ?>>Medlem</option>
+              <option value="admin" <?= $userIsAdmin ? 'selected' : '' ?>>Admin</option>
             </select>
-            <button type="submit" class="small" <?= $isAdmin ? 'disabled' : '' ?>>Ta bort medlem</button>
+            <button type="submit" class="remove-member-button icon-btn small" <?= $userIsAdmin ? 'disabled' : '' ?>>
+              <i class="icon icon-trash error-bg"></i>
+            </button>
           </form>
       </li>
     <? } ?>
@@ -76,7 +78,10 @@ $users = getUsersByGroupId($pdo, $groupId);
 
   <? if (!$invitationLink) { ?>
   <form method="POST">
-    <button class="small" type="submit">Generera länk</button>
+    <button class="small" type="submit">
+      <i class="icon icon-link"></i>
+      <span>Generera länk</span>
+    </button>
     <input type="hidden" name="action" value="create_membership_invitation">
     <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
   </form>
@@ -99,3 +104,24 @@ $users = getUsersByGroupId($pdo, $groupId);
   </section>
 <? } ?>
 </div>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    const handleMemberForms = document.querySelectorAll('.handle-member-form');
+    handleMemberForms.forEach(function(form) {
+      const roleSelect = form.querySelector('.role-select');
+      const removeMemberButton = form.querySelector('.remove-member-button');
+
+      roleSelect.addEventListener('change', function() {
+        form.submit();
+      });
+      removeMemberButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        // ONTODO: Custom confirmation dialog
+        if (confirm('Är du säker på att du vill ta bort den här medlemmen?')) {
+          form.submit();
+        }
+      });
+    });
+  });
+</script>

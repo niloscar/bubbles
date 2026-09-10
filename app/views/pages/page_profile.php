@@ -90,8 +90,14 @@ $user = isset($_SESSION['user_id'])
     </div>
   <? } ?>
   <div class="form-actions n-cols-2">
-    <button type="reset">Återställ</button>
-    <button type="submit">Spara</button>
+    <button type="reset">
+      <i class="icon icon-arrow-u-up-left"></i>
+      <span>Återställ</span>
+    </button>
+    <button type="submit">
+      <i class="icon icon-floppy-disk"></i>
+      <span>Spara</span>
+    </button>
   </div>
 </form>
 
@@ -104,7 +110,10 @@ $user = isset($_SESSION['user_id'])
     </div>
   <? } ?>
   <div class="form-actions">
-    <button type="submit">Uppdatera lösenord</button>
+    <button type="submit">
+      <i class="icon icon-key"></i>
+      <span>Ändra lösenord</span>
+    </button>
   </div>
 </form>
 

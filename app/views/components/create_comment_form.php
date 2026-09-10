@@ -35,6 +35,9 @@ $formFields = [
   <?= displayFormErrorMessage($data['errorMessages'] ?? [], 'general') ?>
 
   <div class="form-actions">
-    <button type="submit" name="action" value="create_comment">Skicka kommentar</button>
+    <button type="submit" name="action" value="create_comment">
+      <i class="icon icon-paper-plane-tilt"></i>
+      <span>Skicka kommentar</span>
+    </button>
   </div>
 </form>
