@@ -8,12 +8,9 @@ node_modules/
 .idea/
 
 docker-data/
-data/
 
 .phpunit.result.cache
 
 .env
 .env.*
 !.env.example
-
-pw/
