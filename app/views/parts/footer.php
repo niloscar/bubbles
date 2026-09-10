@@ -19,7 +19,7 @@
       <ul class="footer-links-list no-list-style">
         <? foreach (NAV_FOOTER as $link) { ?>
           <li>
-            <a href="#">
+            <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" rel="noopener noreferrer">
               <i class="icon icon-<?= htmlspecialchars($link['icon']) ?> accent-dk"></i>
               <span><?= htmlspecialchars($link['title']) ?></span>
             </a>
