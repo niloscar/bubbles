@@ -22,7 +22,10 @@ if ($timeDiff <= 0) {
 
 ?>
 <div class="page-membership-invitation">
-  <h1 class="h-size-1 text-center">Inbjudan</h1>
+  <h1 class="h-size-1 text-center">
+    <i class="icon icon-envelope"></i>
+    <span>Inbjudan</span>
+  </h1>
   <p class="text-center">
     Du har blivit inbjuden till gruppen
     <strong><a href="?p=group&gid=<?= urlencode($invite['group_id']) ?>"><?= htmlspecialchars($invite['group_name']) ?></a></strong>
@@ -37,7 +40,9 @@ if ($timeDiff <= 0) {
     <input type="hidden" name="action" value="accept_membership_invitation">
     <input type="hidden" name="token" value="<?= htmlspecialchars($invite['token']) ?>">
     <div class="form-actions">
-      <button class="btn btn-accept" <?= (!isLoggedIn()) ? 'disabled' : '' ?>>Acceptera inbjudan</button>
+      <button class="btn btn-accept" <?= (!isLoggedIn()) ? 'disabled' : '' ?>>
+        <i class="icon icon-check"></i> Acceptera inbjudan
+      </button>
     </div>
   </form>
 </div>

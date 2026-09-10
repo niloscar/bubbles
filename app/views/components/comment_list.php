@@ -27,9 +27,10 @@ if (empty($comments)) {
           <?= formatUserText($comment['text']) ?>
         </div>
         <div class="comment-meta">
+          <i class="icon icon-pulse"></i>
           <?= formatTimeAgo($comment['created_at']) ?>
           av
-          <a href="?p=user&uid=<?= urlencode($comment['user_id']) ?>"><?= htmlspecialchars($comment['username']) ?></a>
+          <strong><a href="?p=user&uid=<?= urlencode($comment['user_id']) ?>"><?= htmlspecialchars($comment['username']) ?></a></strong>
         </div>
       </div>
     </li>

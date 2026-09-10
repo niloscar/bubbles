@@ -45,7 +45,10 @@ $users = getUsersByGroupId($pdo, $groupId);
   
 ?>
 <section class="group-admin">
-  <h2 class="h-size-3">Administrera</h2>
+  <h2 class="h-size-3">
+    <i class="icon icon-gear"></i>
+    <span>Administrera</span>
+  </h2>
 
   <h3 class="h-size-4">Medlemsförfrågningar</h3>
   <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
@@ -67,7 +70,7 @@ $users = getUsersByGroupId($pdo, $groupId);
               <option value="admin" <?= $userIsAdmin ? 'selected' : '' ?>>Admin</option>
             </select>
             <button type="submit" class="remove-member-button icon-btn small" <?= $userIsAdmin ? 'disabled' : '' ?>>
-              <i class="icon icon-trash error-bg"></i>
+              <i class="icon icon-trash error"></i>
             </button>
           </form>
       </li>
@@ -94,7 +97,10 @@ $users = getUsersByGroupId($pdo, $groupId);
 
 <? if ($isMember) { ?>
   <section class="group-discussions">
-    <h2 class="h-size-3">Diskussioner</h2>
+    <h2 class="h-size-3">
+      <i class="icon icon-chats-circle"></i>
+      <span>Diskussioner</span>
+    </h2>
     <? component('thread_list'); ?>
   </section>
 

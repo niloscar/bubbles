@@ -26,6 +26,7 @@ if (empty($threads)) {
       </a>
 
       <span>
+        <i class="icon icon-pulse"></i>
         <?= formatTimeAgo($thread['last_activity']) ?>
         i
         <a href="?p=group&amp;gid=<?= urlencode($thread['group_id']) ?>">

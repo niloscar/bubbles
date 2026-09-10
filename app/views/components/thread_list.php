@@ -24,6 +24,7 @@ if (empty($threads)) {
         <?= htmlspecialchars($thread['subject']) ?>
       </a>
       <span>
+        <i class="icon icon-pulse"></i>
         <?= formatTimeAgo($thread['last_activity']) ?>
         av <a href="?p=user&uid=<?= urlencode($thread['user_id']) ?>"> <?= htmlspecialchars($thread['last_activity_username']) ?></a>
       </span>

@@ -17,7 +17,7 @@ $thread = $data['thread'] ?? null;
   <? } else { ?>
 
     <a href="?p=groups">Grupper</a>
-    <img src="assets/icons/arrow-right.svg" alt="&raquo;" class="icon icon-arrow-right">
+    <i class="icon icon-arrow-right"></i>
 
     <?
     $groupId = $group['id'] ?? $thread['group_id'];
@@ -26,7 +26,7 @@ $thread = $data['thread'] ?? null;
     if ($thread) { ?>
 
       <a href="?p=group&amp;gid=<?= urlencode($groupId) ?>"><?= htmlspecialchars($groupName) ?></a>
-      <img src="assets/icons/arrow-right.svg" alt="&raquo;" class="icon icon-arrow-right">
+      <i class="icon icon-arrow-right"></i>
       <span><?= htmlspecialchars($thread['subject']) ?></span>
 
     <? } else { ?>

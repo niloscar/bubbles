@@ -21,6 +21,7 @@ $errorMessage = displayFormErrorMessage(
 
 $errorClass = $errorMessage ? ' error' : '';
 $requiredAttr = $field['required'] ? 'required' : '';
+$disabledAttr = isset($field['disabled']) && $field['disabled'] ? 'disabled' : '';
 $placeholderAttr = !empty($field['placeholder'])
     ? 'placeholder="' . htmlspecialchars($field['placeholder']) . '"'
     : '';
@@ -82,6 +83,7 @@ $placeholderAttr = !empty($field['placeholder'])
             name="<?= htmlspecialchars($field['name']) ?>"
             value="<?= htmlspecialchars((string) $value) ?>"
             <?= $placeholderAttr ?>
+            <?= $disabledAttr ?>
             <?= $requiredAttr ?>>
 
     <?php } ?>

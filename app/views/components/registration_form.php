@@ -31,7 +31,7 @@ $formFields = [
     } ?>
 
     <div class="form-actions n-cols-2">
-        <button type="reset" class="btn-error">
+        <button type="reset" class="btn-accent-dk">
             <i class="icon icon-backspace"></i>
             <span>Rensa</span>
         </button>

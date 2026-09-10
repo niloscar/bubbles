@@ -33,14 +33,14 @@ if (empty($pendingRequests)) {
                 <div class="pending-request-actions">
                     <form method="POST">
                         <button class="btn-success" name="action" value="approve_membership" title="Godkänn">
-                            <i class="icon icon-check success-bg"></i>
+                            <i class="icon icon-check success"></i>
                         </button>
                         <input type="hidden" name="request_id" value="<?= (int) $request['id'] ?>">
                     </form>
 
                     <form method="POST" value="reject_membership">
                         <button class="btn-error" name="action" value="reject_membership" title="Neka">
-                            <i class="icon icon-x error-bg"></i>
+                            <i class="icon icon-x error"></i>
                         </button>
                         <input type="hidden" name="request_id" value="<?= (int) $request['id'] ?>">
                     </form>
@@ -80,13 +80,13 @@ if (empty($pendingRequests)) {
                             <div class="pending-request-actions">
                                 <form method="post" action="/membership_requests/<?= $request['id'] ?>/approve">
                                     <button type="submit" title="Godkänn">
-                                        <i class="icon icon-check success-bg"></i>
+                                        <i class="icon icon-check success"></i>
                                     </button>
                                 </form>
 
                                 <form method="post" action="/membership_requests/<?= $request['id'] ?>/reject">
                                     <button type="submit" title="Neka">
-                                        <i class="icon icon-x error-bg"></i>
+                                        <i class="icon icon-x error"></i>
                                     </button>
                                 </form>
                             </div>
