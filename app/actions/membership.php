@@ -46,20 +46,88 @@ function handleApproveMembershipRequest(): void
 
 function handleRejectMembershipRequest(): void
 {
-    if (!isLoggedIn()) return;
+  if (!isLoggedIn()) return;
 
-    $requestId = (int) ($_POST['request_id'] ?? 0);
+  $requestId = (int) ($_POST['request_id'] ?? 0);
 
-    if ($requestId <= 0) return;
+  if ($requestId <= 0) return;
 
-    $pdo = db();
-    $success = rejectMembershipRequest($pdo, $requestId, (int) $_SESSION['user_id']);
+  $pdo = db();
+  $success = rejectMembershipRequest($pdo, $requestId, (int) $_SESSION['user_id']);
 
-    if (!$success) {
-        // ONTODO: Handle error case for when rejecting membership request fails due to insufficient permissions or that the request does not exist
-        return;
+  if (!$success) {
+    // ONTODO: Handle error case for when rejecting membership request fails due to insufficient permissions or that the request does not exist
+    return;
+  }
+
+  header('Location: ' . $_SERVER['REQUEST_URI']);
+  exit;
+}
+
+function handleUpdateMemberRoleRequest(): void
+{
+    if (!isLoggedIn()) {
+        header('Location: ?p=login');
+        exit;
     }
 
-    header('Location: ' . $_SERVER['REQUEST_URI']);
+    $groupId = (int) ($_POST['group_id'] ?? 0);
+    $userId = (int) ($_POST['user_id'] ?? 0);
+    $role = $_POST['role'] ?? '';
+    $whiteList = ['member', 'admin'];
+
+    if (!$groupId || !$userId) {
+        http_response_code(400);
+        exit;
+    }
+
+    if (!in_array($role, $whiteList, true)) {
+        http_response_code(400);
+        exit;
+    }
+
+    $pdo = db();
+    $groupRole = getGroupRole($pdo, $groupId);
+
+    if (strtolower($groupRole) !== 'admin') {
+        http_response_code(403);
+        exit;
+    }
+
+    updateMemberRole($pdo, $groupId, $userId, $role);
+
+    header('Location: ?p=group&gid=' . urlencode($groupId));
+    exit;
+}
+
+function handleRemoveMemberRequest(): void
+{
+    if (!isLoggedIn()) {
+        header('Location: ?p=login');
+        exit;
+    }
+
+    $groupId = (int) ($_POST['group_id'] ?? 0);
+    $userId = (int) ($_POST['user_id'] ?? 0);
+
+    if (!$groupId || !$userId) {
+        http_response_code(400);
+        exit;
+    }
+
+    $pdo = db();
+    $groupRole = getGroupRole($pdo, $groupId);
+
+    if (strtolower($groupRole) !== 'admin') {
+        http_response_code(403);
+        exit;
+    }
+
+    if (!removeMember($pdo, $groupId, $userId)) {
+        http_response_code(400);
+        exit;
+    }
+
+    header('Location: ?p=group&gid=' . urlencode($groupId));
     exit;
 }

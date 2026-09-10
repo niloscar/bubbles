@@ -1,15 +1,20 @@
 <?php
+
 /**
  * Page group view
  */
 
-$groupId = isset($_GET['gid']) 
-  ? (int) $_GET['gid'] 
+$groupId = isset($_GET['gid'])
+  ? (int) $_GET['gid']
   : null;
 
 if (!$groupId) {
   echo "<p>Ingen grupp vald.</p>";
   return;
+}
+
+function isAdmin (string $role) {
+  return strtolower($role) === 'admin';
 }
 
 $data = $data ?? [];
@@ -18,7 +23,7 @@ $pdo = db();
 $group = getGroupById($pdo, $groupId);
 $role = getGroupRole($pdo, $groupId);
 $isMember = $role !== false;
-$isAdmin = strtolower($role) === 'admin';
+$isAdmin = isAdmin($role);
 
 component('breadcrumbs', ['group' => $group]);
 
@@ -27,105 +32,121 @@ component('group_details', ['group' => $group]);
 
 <div class="group-content">
 
-<? if (!$isMember) {
-  $message = isLoggedIn() 
-    ? 'Endast medlemmar kan delta i gruppens diskussioner.' 
-    : 'Endast inloggade medlemmar kan delta i gruppens diskussioner. <a href="?p=login">Logga in</a>';
+  <? if (!$isMember) {
+    $message = isLoggedIn()
+      ? 'Endast medlemmar kan delta i gruppens diskussioner.'
+      : 'Endast inloggade medlemmar kan delta i gruppens diskussioner. <a href="?p=login">Logga in</a>';
 
-  displayAlert($message, 'info');
+    displayAlert($message, 'info');
+  } ?>
 
-} ?>
+  <? if ($isAdmin) {
 
-<? if ($isAdmin) { 
+    $invitationLink = $_SESSION['generated_invitation_link'] ?? null;
+    unset($_SESSION['generated_invitation_link']);
 
-$invitationLink = $_SESSION['generated_invitation_link'] ?? null;
-unset($_SESSION['generated_invitation_link']);
+    $users = getUsersByGroupId($pdo, $groupId);
 
-$users = getUsersByGroupId($pdo, $groupId);
-  
-?>
-<section class="group-admin">
-  <h2 class="h-size-3">
-    <i class="icon icon-gear"></i>
-    <span>Administrera</span>
-  </h2>
+    $numAdmins = count(array_filter($users, fn ($user) => isAdmin($user['role'])));
 
-  <h3 class="h-size-4">Medlemsförfrågningar</h3>
-  <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
+  ?>
+    <section class="group-admin">
+      <h2 class="h-size-3">
+        <i class="icon icon-gear"></i>
+        <span>Administrera</span>
+      </h2>
 
-  <h3 class="h-size-4">Hantera medlemmar</h3>
-  <ul class="no-list-style group-members">
-    <? foreach ($users as $user) { 
-      $userIsMember = strtolower($user['role']) === 'member';
-      $userIsAdmin = strtolower($user['role']) === 'admin';
-      ?>
-      <li>
-        <a href="?p=user&uid=<?= urlencode($user['id']) ?>"><?= htmlspecialchars($user['username']) ?></a>
-          <form method="POST" class="handle-member-form">
-            <input type="hidden" name="action" value="remove_member">
-            <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
-            <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-            <select name="role" class="role-select small" <?= $userIsAdmin ? 'disabled' : '' ?>>
-              <option value="member" <?= $userIsMember ? 'selected' : '' ?>>Medlem</option>
-              <option value="admin" <?= $userIsAdmin ? 'selected' : '' ?>>Admin</option>
-            </select>
-            <button type="submit" class="remove-member-button icon-btn small" <?= $userIsAdmin ? 'disabled' : '' ?>>
-              <i class="icon icon-trash error"></i>
-            </button>
-          </form>
-      </li>
-    <? } ?>
-  </ul>
+      <h3 class="h-size-4">Medlemsförfrågningar</h3>
+      <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
 
-<h3 class="h-size-4">Inbjudningslänk</h3>
+      <h3 class="h-size-4">Hantera medlemmar</h3>
+      <ul class="no-list-style group-members">
+        <? foreach ($users as $user) {
+          $userIsMember = strtolower($user['role']) === 'member';
+          $userIsAdmin = isAdmin($user['role']);
+        ?>
+          <li>
+            <a href="?p=user&uid=<?= urlencode($user['id']) ?>">
+              <?= htmlspecialchars($user['username']) ?>
+            </a>
 
-  <? if (!$invitationLink) { ?>
-  <form method="POST">
-    <button class="small" type="submit">
-      <i class="icon icon-link"></i>
-      <span>Generera länk</span>
-    </button>
-    <input type="hidden" name="action" value="create_membership_invitation">
-    <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
-  </form>
-  <? } else { ?>
-    <a id="invitation-link" href="<?= htmlspecialchars($invitationLink) ?>" class="invitation-link" readonly><?= htmlspecialchars($invitationLink) ?></a>
+            <form method="POST" class="role-form">
+              <input type="hidden" name="action" value="update_member_role">
+              <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
+              <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+
+              <select name="role" class="role-select small" <?= $userIsAdmin && $numAdmins <= 1 ? 'disabled' : '' ?> title="Ändra roll">
+                <option value="member" <?= $userIsMember ? 'selected' : '' ?>>Medlem</option>
+                <option value="admin" <?= $userIsAdmin ? 'selected' : '' ?>>Admin</option>
+              </select>
+            </form>
+
+            <form method="POST" class="remove-member-form">
+              <input type="hidden" name="action" value="remove_member">
+              <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
+              <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+
+              <button 
+                type="submit" 
+                class="remove-member-btn icon-btn small" <?= $userIsAdmin ? 'disabled' : '' ?> 
+                title="Ta bort <?= htmlspecialchars($user['username']) ?> från gruppen"
+                >
+                <i class="icon icon-trash error"></i>
+              </button>
+            </form>
+          </li>
+        <? } ?>
+      </ul>
+
+      <h3 class="h-size-4">Inbjudningslänk</h3>
+
+      <? if (!$invitationLink) { ?>
+        <form method="POST">
+          <button class="small" type="submit">
+            <i class="icon icon-link"></i>
+            <span>Generera länk</span>
+          </button>
+          <input type="hidden" name="action" value="create_membership_invitation">
+          <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
+        </form>
+      <? } else { ?>
+        <a id="invitation-link" href="<?= htmlspecialchars($invitationLink) ?>" class="invitation-link"><?= htmlspecialchars($invitationLink) ?></a>
+      <? } ?>
+
+    </section>
   <? } ?>
 
-</section>
-<? } ?>
+  <? if ($isMember) { ?>
+    <section class="group-discussions">
+      <h2 class="h-size-3">
+        <i class="icon icon-chats-circle"></i>
+        <span>Diskussioner</span>
+      </h2>
+      <? component('thread_list'); ?>
+    </section>
 
-<? if ($isMember) { ?>
-  <section class="group-discussions">
-    <h2 class="h-size-3">
-      <i class="icon icon-chats-circle"></i>
-      <span>Diskussioner</span>
-    </h2>
-    <? component('thread_list'); ?>
-  </section>
-
-  <section class="create-thread">
-    <h2 class='h-size-2 text-center'>Starta en ny diskussion</h2>
-    <? component('create_thread_form', $data); ?>
-  </section>
-<? } ?>
+    <section class="create-thread">
+      <h2 class='h-size-2 text-center'>
+        <i class="icon icon-chats-circle"></i>
+        <span>Starta en ny diskussion</span>
+      </h2>
+      <? component('create_thread_form', $data); ?>
+    </section>
+  <? } ?>
 </div>
 
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {
-    const handleMemberForms = document.querySelectorAll('.handle-member-form');
-    handleMemberForms.forEach(function(form) {
-      const roleSelect = form.querySelector('.role-select');
-      const removeMemberButton = form.querySelector('.remove-member-button');
-
-      roleSelect.addEventListener('change', function() {
-        form.submit();
+    document.querySelectorAll('.role-form .role-select').forEach(function (select) {
+      select.addEventListener('change', function () {
+        select.form.requestSubmit();
       });
-      removeMemberButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        // ONTODO: Custom confirmation dialog
-        if (confirm('Är du säker på att du vill ta bort den här medlemmen?')) {
-          form.submit();
+    });
+
+    document.querySelectorAll('.remove-member-form').forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!confirm('Är du säker på att du vill ta bort den här medlemmen?')) {
+          event.preventDefault();
         }
       });
     });
