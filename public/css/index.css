@@ -271,10 +271,38 @@ li.space-beneath>* {
   background-color: #222;
   color: #fff;
 
-  ul {
+  .container {
     display: flex;
     align-items: center;
-    gap: 10px;
+  }
+
+  .nav-main-branding {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: calc(var(--col-gap) * 2);
+
+    .nav-main-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--height);
+      height: var(--height);
+      color: var(--accent);
+      font-size: 1.5em;
+
+      &:hover {
+        color: var(--accent-hover);
+        border-bottom-color: transparent;
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--col-gap);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -698,6 +726,10 @@ ul.group-list>.group-list-item:not(:last-child) {
   border-bottom: 1px solid #ccc;
 
   p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 768px) {
     margin-bottom: 0;
   }
 }

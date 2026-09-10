@@ -28,6 +28,11 @@ function isActive(string $slug, string $currentPage): bool
 
 <nav class="nav-main">
   <div class="container v-padding-1">
+    <div class="nav-main-branding">
+      <a href="?p=start" class="nav-main-logo">
+        <i class="icon icon-chats-circle accent"></i>
+      </a>
+    </div>
     <ul>
       <?php foreach (NAV_MAIN as $page) { ?>
         <li>
