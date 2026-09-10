@@ -13,7 +13,8 @@ if (!$groupId) {
   return;
 }
 
-function isAdmin (string $role) {
+function isAdmin(string $role)
+{
   return strtolower($role) === 'admin';
 }
 
@@ -42,12 +43,7 @@ component('group_details', ['group' => $group]);
 
   <? if ($isAdmin) {
 
-    $invitationLink = $_SESSION['generated_invitation_link'] ?? null;
-    unset($_SESSION['generated_invitation_link']);
-
     $users = getUsersByGroupId($pdo, $groupId);
-
-    $numAdmins = count(array_filter($users, fn ($user) => isAdmin($user['role'])));
 
   ?>
     <section class="group-admin">
@@ -60,58 +56,10 @@ component('group_details', ['group' => $group]);
       <? component('pending_requests_list', ['group_id' => $group['id']]); ?>
 
       <h3 class="h-size-4">Hantera medlemmar</h3>
-      <ul class="no-list-style group-members">
-        <? foreach ($users as $user) {
-          $userIsMember = strtolower($user['role']) === 'member';
-          $userIsAdmin = isAdmin($user['role']);
-        ?>
-          <li>
-            <a href="?p=user&uid=<?= urlencode($user['id']) ?>">
-              <?= htmlspecialchars($user['username']) ?>
-            </a>
-
-            <form method="POST" class="role-form">
-              <input type="hidden" name="action" value="update_member_role">
-              <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
-              <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-
-              <select name="role" class="role-select small" <?= $userIsAdmin && $numAdmins <= 1 ? 'disabled' : '' ?> title="Ändra roll">
-                <option value="member" <?= $userIsMember ? 'selected' : '' ?>>Medlem</option>
-                <option value="admin" <?= $userIsAdmin ? 'selected' : '' ?>>Admin</option>
-              </select>
-            </form>
-
-            <form method="POST" class="remove-member-form">
-              <input type="hidden" name="action" value="remove_member">
-              <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
-              <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-
-              <button 
-                type="submit" 
-                class="remove-member-btn icon-btn small" <?= $userIsAdmin ? 'disabled' : '' ?> 
-                title="Ta bort <?= htmlspecialchars($user['username']) ?> från gruppen"
-                >
-                <i class="icon icon-trash error"></i>
-              </button>
-            </form>
-          </li>
-        <? } ?>
-      </ul>
+      <? component('member_roles', ['users' => $users, 'group' => $group]); ?>
 
       <h3 class="h-size-4">Inbjudningslänk</h3>
-
-      <? if (!$invitationLink) { ?>
-        <form method="POST">
-          <button class="small" type="submit">
-            <i class="icon icon-link"></i>
-            <span>Generera länk</span>
-          </button>
-          <input type="hidden" name="action" value="create_membership_invitation">
-          <input type="hidden" name="group_id" value="<?= $group['id'] ?>">
-        </form>
-      <? } else { ?>
-        <a id="invitation-link" href="<?= htmlspecialchars($invitationLink) ?>" class="invitation-link"><?= htmlspecialchars($invitationLink) ?></a>
-      <? } ?>
+      <? component('invitation_link', ['group' => $group]); ?>
 
     </section>
   <? } ?>
@@ -136,19 +84,17 @@ component('group_details', ['group' => $group]);
 </div>
 
 <script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.role-form .role-select').forEach(function (select) {
-      select.addEventListener('change', function () {
-        select.form.requestSubmit();
-      });
+  document.querySelectorAll('.role-form .role-select').forEach(function(select) {
+    select.addEventListener('change', function() {
+      select.form.requestSubmit();
     });
+  });
 
-    document.querySelectorAll('.remove-member-form').forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!confirm('Är du säker på att du vill ta bort den här medlemmen?')) {
-          event.preventDefault();
-        }
-      });
+  document.querySelectorAll('.remove-member-form').forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+      if (!confirm('Är du säker på att du vill ta bort den här medlemmen?')) {
+        event.preventDefault();
+      }
     });
   });
 </script>
