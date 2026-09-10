@@ -121,7 +121,7 @@ Projektet följer i huvudsak dessa namnkonventioner:
 
 Bubbles använder MariaDB.
 
-Databasen innehåller tabeller för:
+Databasen innehåller (se `docs/er-diagram.png`) tabeller för:
 
 - användare
 - grupper
