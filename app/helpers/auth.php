@@ -113,3 +113,28 @@ function updateLastLogin(PDO $pdo, int $userId): void
         'user_id' => $userId
     ]);
 }
+
+function requireLogin(): void
+{
+    if (!isLoggedIn()) {
+        header('Location: ?p=login');
+        exit;
+    }
+}
+
+function requireThreadAccess(int $threadId): array
+{
+    requireLogin();
+
+    $pdo = db();
+    $thread = getThreadByIdWithComments($pdo, $threadId);
+
+    if (!$thread) pageNotFound();
+
+    if (getGroupRole($pdo, (int) $thread['group_id']) === false) {
+        http_response_code(403);
+        exit;
+    }
+
+    return $thread;
+}

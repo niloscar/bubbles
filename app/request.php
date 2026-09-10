@@ -55,6 +55,16 @@ function handleRequest(): array
     $pageSlug = $_GET['p'] ?? 'start';
     $getAction = $_GET['a'] ?? null;
 
+    if ($pageSlug === 'thread') {
+        $threadId = isset($_GET['tid'])
+            ? (int) $_GET['tid']
+            : null;
+
+        if (!$threadId) pageNotFound();
+
+        $viewData['thread'] = requireThreadAccess($threadId);
+    }
+
     if ($pageSlug === 'login') {
         $viewData = handleLoginRequest();
     }
@@ -72,6 +82,7 @@ function handleRequest(): array
         $invite = getMembershipInvitationByToken($pdo, $token);
 
         if (!$invite) pageNotFound();
+
         $viewData['invite'] = $invite;
     }
 
