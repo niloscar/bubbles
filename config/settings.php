@@ -5,8 +5,8 @@
  */
 
 const SITE_NAME = 'Bubbles';
-const PAGE_URL = 'http://localhost:8080';
-const SANDBOX = true;
+
+define('PAGE_URL', $_ENV['APP_URL'] ?? 'http://localhost:8080');
 
 const PAGES = [
   ['title' => 'Start', 'slug' => 'start', 'view' => 'page_start', 'ancestors' => []],
