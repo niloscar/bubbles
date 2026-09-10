@@ -17,12 +17,12 @@
 
 - [x] Det ska finns 2 roller som en användare kan ha för en grupp, medlem eller adminstratör.​​​​​​​
 - [x] Det är endast administratörer som ska kunna godkänna ansökningar om att gå med i gruppen
-- [ ] En administraör ska kunna välja roll på de andra som är med i gruppen
+- [x] En administraör ska kunna välja roll på de andra som är med i gruppen
 - [x] En administratör ska kunna skapa en inbjudanlänk, som en annan person kan använda för att gå med i gruppen utan att behöva vänta på att bli godkänd. Detta ska vara en “hot link” där man bara kan registrera sig 1 gång, och den ska bara vara giltig i 24 timmar.
 
 **Inlämning**
 
-- [ ] Bild på startsidan
-- [ ] Bild på en gruppdiskussion
-- [ ] Bild på hur man svarar på en diskussion
-- [ ] Genomgånsvideo på hur man skapar ett konto, ansöker om att gå med i en grupp och hur man startar en diskussion
+- [x] Bild på startsidan
+- [x] Bild på en gruppdiskussion
+- [x] Bild på hur man svarar på en diskussion
+- [x] Genomgånsvideo på hur man skapar ett konto, ansöker om att gå med i en grupp och hur man startar en diskussion
