@@ -841,3 +841,16 @@ a.avatar {
     grid-template-columns: 1fr;
   }
 }
+
+.remove-member-button {
+  background-color: transparent !important;
+  padding: 4px !important;
+
+  &:hover {
+    opacity: .75;
+  }
+
+  &:disabled {
+    opacity: .33;
+  }
+}
