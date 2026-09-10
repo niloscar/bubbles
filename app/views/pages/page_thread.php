@@ -1,28 +1,23 @@
 <?php
+
 /**
  * Page thread view
  */
 
-$threadId = isset($_GET['tid']) 
-  ? (int) $_GET['tid'] 
+$threadId = isset($_GET['tid'])
+  ? (int) $_GET['tid']
   : null;
 
-if (!$threadId) {
-  echo "<p>Ingen tråd vald.</p>";
-  return;
-}
+if (!$threadId) pageNotFound();
 
 $data = $data ?? [];
 
 $pdo = db();
 $thread = getThreadByIdWithComments($pdo, $threadId);
 
-if ($thread === false) {
-  echo "<p>Kunde inte hitta tråden.</p>";
-  return;
-}
+if ($thread === false) pageNotFound();
 
-component('breadcrumbs', ['thread' => $thread]); 
+component('breadcrumbs', ['thread' => $thread]);
 ?>
 <div class="thread">
   <section class="thread-start">
