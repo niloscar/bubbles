@@ -102,6 +102,7 @@ function getThreadByIdWithComments(PDO $db, int $threadId): array|false
             threads.created_at,
             threads.user_id,
             users.username,
+            users.email,
             users.fname,
             users.lname,
             users.avatar
@@ -133,6 +134,7 @@ function getThreadByIdWithComments(PDO $db, int $threadId): array|false
             comments.edited_at,
             comments.user_id,
             users.username,
+            users.email,
             users.fname,
             users.lname,
             users.avatar

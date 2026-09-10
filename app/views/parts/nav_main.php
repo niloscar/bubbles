@@ -7,7 +7,6 @@
 $pdo = db();
 $user = currentUser($pdo);
 
-$avatar = $user['avatar'] ?? './assets/icons/user.svg';
 $currentPage = $_GET['p'] ?? 'start';
 
 function isActive(string $slug, string $currentPage): bool
@@ -50,7 +49,7 @@ function isActive(string $slug, string $currentPage): bool
           <a href="?p=profile">
             <img
               alt="Profil (<?= $user['username'] ?>)"
-              src="<?= $avatar ?>">
+              src="<?= getAvatarUrl($user) ?>">
           </a>
         </li>
       <? } else { ?>
